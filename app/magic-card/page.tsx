@@ -21,6 +21,7 @@ export default function MagicCardPage() {
   const isDrawingRef = useRef(false)
   const lastPointRef = useRef<Point | null>(null)
   const [isRevealed, setIsRevealed] = useState(false)
+  const [isCoverReady, setIsCoverReady] = useState(false)
   const [coinPosition, setCoinPosition] = useState<Point>({ x: 0, y: 0 })
 
   useEffect(() => {
@@ -83,6 +84,10 @@ export default function MagicCardPage() {
       }
 
       ctx.globalAlpha = 1
+
+      if (!isCoverReady) {
+        setIsCoverReady(true)
+      }
     }
 
     drawCover()
@@ -236,9 +241,14 @@ export default function MagicCardPage() {
 
             {!isRevealed && (
               <div className="absolute inset-0">
+                {!isCoverReady && (
+                  <div className="absolute inset-0 bg-[linear-gradient(135deg,#f6e6a6_0%,#d4a046_45%,#e7c46d_100%)]" />
+                )}
                 <canvas
                   ref={canvasRef}
-                  className="h-full w-full touch-none"
+                  className={`h-full w-full touch-none transition-opacity duration-200 ${
+                    isCoverReady ? 'opacity-100' : 'opacity-0'
+                  }`}
                 />
                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center"></div>
                 <button
