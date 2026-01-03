@@ -31,8 +31,7 @@ type SocialLink = {
 export const PROJECTS: Project[] = [
   {
     name: 'LAAX',
-    description:
-      'Ski resort in Switzerland',
+    description: 'Ski resort in Switzerland',
     link: 'https://laax.com/',
     // video:
     //   'https://res.cloudinary.com/read-cv/video/upload/t_v_b/v1/1/profileItems/W2azTw5BVbMXfj7F53G92hMVIn32/newProfileItem/d898be8a-7037-4c71-af0c-8997239b050d.mp4?_a=DATAdtAAZAA0',
@@ -83,18 +82,25 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    title:
+      'From a website to a platform: my LAAX success story (3 launches, 15 months, real results)',
+    description:
+      'A look back at my experience of building the LAAX platform and what I learned',
+    link: '/blog/from-a-website-to-a-platform-my-laax-success-story-3-launches-15-months-real-results',
+    uid: 'blog-3',
+  },
+  {
+    title: 'What I learned from my experience of sales',
+    description: 'A look back at my experience of sales and what I learned',
+    link: '/blog/what-i-learned-from-my-experience-of-sales',
+    uid: 'blog-2',
+  },
+  {
     title: 'Why I left my job to start a developer career',
     description:
       'A deep dive into my decision to leave my job and start a developer career',
     link: '/blog/why-i-left-my-job-to-start-a-developer-career',
     uid: 'blog-1',
-  },
-  {
-    title: 'What I learned from my experience of sales',
-    description:
-      'A look back at my experience of sales and what I learned',
-    link: '/blog/what-i-learned-from-my-experience-of-sales',
-    uid: 'blog-2',
   },
 ]
 
