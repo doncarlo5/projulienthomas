@@ -1,11 +1,12 @@
 'use client'
 
+import type { ReactNode } from 'react'
 import { ThemeProvider } from 'next-themes'
 
 export function ThemeProviderWrapper({
   children,
 }: {
-  children: React.ReactNode
+  children: ReactNode
 }) {
   return (
     <ThemeProvider
@@ -18,4 +19,3 @@ export function ThemeProviderWrapper({
     </ThemeProvider>
   )
 }
-
