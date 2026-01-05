@@ -1,0 +1,276 @@
+<Cover
+  src="/laax/cover.jpg"
+  alt="LAAX interactive resort map showing live lift status and the mountain overview"
+  caption="LAAX - Where freestyle is celebrated. "
+/>
+
+**3 launches / 15 months** | **8k users avg. daily visitors** | **1.15M visitors**
+
+# One Destination Plateform: LAAX Success Story
+
+I started working on LAAX in **August 2024**… from **Amsterdam**.
+
+A few months later, we travelled into the mountains for the start of winter season. After **plane → train → bus**, we walked into one of the biggest meeting rooms I’ve ever seen.
+
+And suddenly: _faces instead of Microsoft Teams avatars._
+
+In that room there wasn’t “the client.” There was **everyone**: Guest Care (support), Hotels, LAAX School, Tickets/Lifts, Finance… all the people we’d been building for, sometimes debating with, and always trying to align.
+
+That moment made the project real:
+
+**we weren’t shipping “a website”, we were building a shared platform for an entire resort.**
+
+---
+
+## The hard truth: guests want one journey, but resorts are many businesses
+
+Planning a mountain day online sounds simple… until it’s not:
+
+- tickets in one place
+- lessons somewhere else
+- hotels somewhere else
+- and real-time info (lifts / map / webcams) spread across pages
+
+At LAAX, not every department initially agreed on the idea of **one platform**.
+
+What made the difference was leadership support from the top (Reto **Gurtner**), which helped align stakeholders and push collaboration when things could’ve stayed fragmented.
+
+---
+
+## The roadmap: 3 launches that built momentum
+
+| Launch | Date         | What shipped                                 | What I owned / contributed                                                                |
+| -----: | ------------ | -------------------------------------------- | ----------------------------------------------------------------------------------------- |
+|      1 | **Nov 2024** | Marketing / Showcase website (+ MICE)        | CMS study → **Sanity selected**, schemas, onboarding marketing, modernized styling        |
+|      2 | **Jun 2025** | Unified e-commerce (hotels, tickets, school) | **LAAX School system** end-to-end (customer + admin + emails)                             |
+|      3 | **Nov 2025** | Interactive map + webcams + AI assistant     | Map UX + layers (**MapLibre**), improved webcams UX + premium gating, assistant structure |
+
+---
+
+## Launch #1 - Marketing website (Nov 2024)
+
+![Sanity content studio showing LAAX marketing content structure](/laax/sanity.png)
+
+### What we shipped
+
+A new **Next.js** website powered by **Sanity CMS** for:
+
+- LAAX marketing pages
+- and **MICE** (LAAX Meetings & Events, the B2B department)
+
+### What I did
+
+- **CMS benchmark** (Prismic vs Strapi vs Payload vs Sanity) → chose **Sanity**
+- Built the initial **content structure (schemas)** so marketing could actually run with it
+- Copied the old site’s look & feel **with a modern touch** (without breaking the brand)
+- **Onboarded the marketing team** (4 people) + supported content migration
+
+### Proof it worked (traffic jump)
+
+In the two periods below (same duration), active users went from ~20k to ~141k:
+
+- **Sep 1 → Nov 3, 2024 (old WordPress):** 20,379 users / 64 days → **~318/day**
+- **Nov 17 → Jan 19, 2025 (new site):** 141,393 users / 64 days → **~2,209/day**
+
+That’s a **+593.8% increase** in active users in just a few months.
+
+---
+
+## Launch #2 - Unified e-commerce (Jun 2025)
+
+![LAAX e-commerce flow showing products and checkout](/laax/shop.png)
+
+### What “unified e-commerce” means (in real life)
+
+One cart that can include:
+
+- **Accommodations** (via SimpleBooking)
+- **Lift tickets** (via WAG)
+- **School lessons** (and events)
+
+### The part I led: LAAX School (customer + admin + emails)
+
+School was the toughest (and most interesting) integration because:
+
+- they already had a working system before
+- but once everything moved into one platform, we needed to **recreate the customer booking UX**
+- and also build a real **admin tool** to manage:
+  - lessons
+  - quotas
+  - schedules
+  - operational edge cases
+- plus the **email layer** that makes the experience feel complete
+
+This is where my sales background helped a lot:
+**conversion is often just “remove friction + build trust.”**
+
+### Proof it worked (school revenue)
+
+From **May → Aug 2025**, school bookings delivered:
+
+| Metric        |               Performance |
+| ------------- | ------------------------: |
+| Total Revenue | **↗ 30% compare to 2024** |
+
+And one of the best compliments I got from the school side was simple:
+
+> “We had the best week of bookings we never had before.”
+
+---
+
+## Launch #3 - Map + Webcams + AI Assistant (Nov 2025)
+
+![Interactive LAAX resort map with live lift status and layers](/laax/map.png)
+
+This launch is where the platform moved from “booking” to **real-time resort experience**.
+
+### 1) The interactive resort map (MapLibre)
+
+The old map basically showed lift status - and that was it.
+
+We shipped a map that still keeps lift status as the core, but adds real utility:
+
+- lift status (main goal)
+- slopes
+- hiking & sledging routes
+- restaurants
+- webcams
+- accommodations
+- ticket offices
+- pickup stations
+- LAAX School offices
+- rentals
+- snowparks + Freestyle Academy
+- parkings + lockers
+- restricted / nature protected areas
+- **live bus positions**
+
+### 2) Webcams that are actually usable
+
+We built `/webcams` with:
+
+- better UX/UI (including “big screen” viewing)
+- **gatecams** as a premium feature:
+  - if you’re not premium → it’s blurred
+  - if you are premium → full access  
+    → a simple product mechanic that supports the business model
+
+### 3) AI assistant (with voice)
+
+The assistant pulls structured knowledge from:
+
+- the WAG Sanity database
+- and our own Sanity database
+
+It can help with questions like:
+
+- what’s open today (lifts status, etc.)
+- school, ski/snowboard, accommodations
+- marketing content (pages)
+- even compare **rental prices for a family** (equipment included)
+
+And yes: **voice interaction**, ChatGPT-style.
+
+---
+
+## What the data says (Vercel Analytics - Sep 27, 2024 → Jan 3, 2026)
+
+![Vercel Analytics overview showing 1,153,491 visitors and 3,151,214 page views](/laax/analytics-overview.png)
+
+Over that full period:
+
+- **1,153,491 visitors**
+- **3,151,214 page views**
+- big seasonal peak: **173,247 visitors in Nov 2025**
+
+### Mobile is the baseline (not “nice to have”)
+
+![Vercel Analytics breakdown showing devices, top pages, referrers, and countries](/laax/analytics-breakdown.png)
+
+Device split:
+
+- **67% mobile**
+- **31% desktop**
+- **1% tablet**
+
+So when I say “responsiveness mattered,” I mean: **this platform lives in pockets**.
+
+### Where users spend time
+
+Top pages by visitors:
+
+- `/` - **374K** (homepage)
+- `/shop` - **178K**
+- `/shop/tickets/details` - **176K** (lift ticket)
+- `/school` - **58K**
+
+That’s the clearest signal that the site isn’t only marketing - **shopping and booking are core.**
+
+---
+
+## The KPI I’m most proud of: what users say after paying
+
+On the confirmation page (post-purchase), we collected **479 ratings**:
+
+- **Average score:** **7.9 / 10**
+- **Breakdown:** 87 unsatisfactory · 129 good · 263 excellent  
+  → that’s ~**55% “excellent”**
+
+Some of my favorite comments (because they repeat the same theme: simplicity):
+
+> “Kurz und einfach. Super Sache.” - 10/10 (2025-11-10)  
+> “Schnelle und übersichtliche Bestellabwicklung.” - 10/10 (2025-11-24)  
+> “Easy, selbsterklärend. Freue mich!” - 10/10 (2026-01-01)
+
+If I summarize 400+ comments in one line:
+**people loved a fast flow, clear steps, and an experience that feels effortless.**
+
+---
+
+## What I learned (the stuff you don’t see on the homepage)
+
+### 1) Alignment > code
+
+Cross-department platforms fail more from misalignment than from bugs.
+You need shared incentives, clear ownership, and leadership support.
+
+### 2) Content modeling is product design
+
+A good schema prevents chaos.
+A bad schema creates infinite edge cases.
+
+### 3) Performance is a feature (especially on maps)
+
+On an interactive map, small delays compound quickly - especially on mobile.
+
+### 4) “Easy” is usually hard work
+
+“Easy, selbsterklärend” (self-explanatory) is not an accident.
+It’s hundreds of small UX decisions.
+
+---
+
+## Tech stack (the pieces that made it ship)
+
+- **Next.js** (web app)
+- **Sanity** (headless CMS)
+- **MapLibre** (interactive resort map)
+- **Sentry** (monitoring)
+- Integrations: SimpleBooking, WAG systems
+- Custom tooling: emails (Brevo), admin UIs, translation workflows
+- Analytics: Vercel Analytics and Google Analytics
+
+---
+
+## Closing
+
+This project is one of my proudest experiences because it combined:
+
+- real stakeholder complexity
+- real seasonality pressure
+- real users
+- and real measurable outcomes
+
+And personally: going from remote building in Amsterdam to standing in that LAAX meeting room - with every department in front of us - was the moment I realized:
+
+**this is what “shipping in the real world” actually means.**

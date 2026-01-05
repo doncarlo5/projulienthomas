@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
-import { ThemeProvider } from 'next-themes'
+import { ThemeProviderWrapper } from './theme-provider'
 import { LayoutShell } from './layout-shell'
 
 export const viewport: Viewport = {
@@ -36,14 +36,9 @@ export default function RootLayout({
       <body
         className={`${geist.variable} ${geistMono.variable} bg-white tracking-tight antialiased dark:bg-zinc-950`}
       >
-        <ThemeProvider
-          enableSystem={true}
-          attribute="class"
-          storageKey="theme"
-          defaultTheme="system"
-        >
+        <ThemeProviderWrapper>
           <LayoutShell>{children}</LayoutShell>
-        </ThemeProvider>
+        </ThemeProviderWrapper>
       </body>
     </html>
   )
