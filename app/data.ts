@@ -85,7 +85,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: 'One Destination Plateform: LAAX Success Story',
     description:
       'A look back at my experience of building the LAAX platform and what I learned',
-    link: '/blog/from-a-website-to-a-platform-my-laax-success-story-3-launches-15-months-real-results',
+    link: '/blog/one-destination-plateform-laax-success-story',
     uid: 'blog-3',
   },
   {
