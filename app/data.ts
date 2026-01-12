@@ -118,6 +118,13 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    title: 'How we handle Sanity content with a NextJS website (SSR)',
+    description:
+      'A walkthrough of the Sanity webhook and revalidateTag flow used for LAAX marketing pages.',
+    link: '/blog/how-we-handle-sanity-content-with-a-nextjs-website-ssr',
+    uid: 'blog-4',
+  },
+  {
     title: 'One Destination Plateform: LAAX Success Story',
     description:
       'A look back at my experience of building the LAAX platform and what I learned',

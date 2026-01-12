@@ -1,10 +1,12 @@
 import type { MDXComponents } from 'mdx/types'
 import { ComponentPropsWithoutRef } from 'react'
 import { highlight } from 'sugar-high'
+import { Mermaid } from '@/components/ui/mermaid'
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...components,
+    Mermaid,
     Cover: ({
       src,
       alt,

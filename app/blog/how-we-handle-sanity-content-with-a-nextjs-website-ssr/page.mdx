@@ -1,0 +1,194 @@
+# How we handle Sanity content with a NextJS website (SSR)
+
+LAAX marketing pages: Sanity + Next.js + Vercel (example: /de/freestyle).
+
+This is a simple walkthrough of the real flow in the LAAX codebase for a marketing page like /de/freestyle. It gives you fast pages and fast content updates without requiring a full redeploy.
+
+---
+
+## 1) Confirming the page: /de/freestyle
+
+You shared the Sanity document:
+
+- \_type: "page"
+- slug.current: "/de/freestyle"
+- language: "de"
+
+Your marketing route builds the slug exactly like this:
+
+```ts
+params: {
+  slug: '/' + params.locale + '/' + params.uid
+}
+// locale="de", uid="freestyle" => "/de/freestyle"
+```
+
+So the Next.js GROQ query:
+
+```groq
+*[_type == "page" && slug.current == $slug][0]
+```
+
+will match your document when `$slug = "/de/freestyle"`.
+
+## 2) How LAAX uses Next.js for marketing pages
+
+In the LAAX Next.js App Router, marketing pages are rendered by the dynamic route:
+
+`app/[locale]/(marketing)/[uid]/page.tsx`
+
+So `/de/freestyle` becomes `{ locale: "de", uid: "freestyle" }`. That page:
+
+- runs on the server (Server Components)
+- fetches the Sanity document for that slug
+- renders its slices via your `<SliceZone />`
+
+Why this is good:
+
+- Next.js can cache data and/or rendering output to avoid re-fetching and re-rendering on every request.
+- Those caches can later be invalidated (revalidated) when content changes.
+
+## 3) Why LAAX chose Sanity (especially for non-devs)
+
+Sanity is a great fit when:
+
+- developers want structured content (schemas, fields, slices)
+- non-developers want a friendly editing UI to publish content independently
+
+Sanity Studio is designed for this: developers define schemas in code and the Studio generates the editor UI.
+
+## 4) How Sanity interacts with Next.js (and Vercel)
+
+### 4.1 What triggers the flow?
+
+When an editor clicks Publish in Sanity Studio, Sanity can run a webhook. Webhooks can be configured to trigger on:
+
+- create
+- update
+- delete
+
+Sanity includes helpful headers like:
+
+- `sanity-operation: create | update | delete`
+
+You can also configure a secret so the receiver can verify the origin.
+
+### 4.2 Where does the webhook go?
+
+In LAAX, the webhook calls your Next.js Route Handler:
+
+`app/api/revalidate/route.ts`
+
+That handler uses `parseBody()` from `next-sanity/webhook` to:
+
+- read the body
+- verify the signature using `SANITY_REVALIDATE_SECRET`
+
+## 5) What is a "tag" in Next.js caching?
+
+A tag is a string label you attach to cached work (most commonly a fetch) so you can invalidate it later.
+
+```ts
+fetch(url, {
+  next: { tags: ['some-tag'] },
+})
+```
+
+Later, from server code (Route Handler or Server Action), you call:
+
+```ts
+revalidateTag('some-tag')
+```
+
+Mental model: a tag is like a sticky note on cached data. When content changes, you remove the sticky note (invalidate the tag), and the next request recreates fresh cached data.
+
+## 6) The LAAX "tag contract" for /de/freestyle
+
+The tag you revalidate must match the tag used when fetching data.
+
+### 6.1 Tag used when rendering /de/freestyle
+
+In `app/[locale]/(marketing)/[uid]/page.tsx`, you use:
+
+```ts
+tags: ['sanity' + '/' + params.locale + '/' + params.uid]
+```
+
+For `/de/freestyle`, this becomes `sanity/de/freestyle`. Metadata fetches use the same tag.
+
+### 6.2 Tag invalidated by the webhook
+
+In `app/api/revalidate/route.ts`, you do:
+
+```ts
+if (body.slug) {
+  revalidateTag('sanity' + body.slug)
+}
+```
+
+If Sanity sends `body.slug = "/de/freestyle"`, the code calls `revalidateTag('sanity/de/freestyle')`. That matches the tag used by the page and metadata.
+
+## 7) What happens after revalidateTag()?
+
+Two key points:
+
+- You are not redeploying. You are invalidating cached data so Next.js can re-fetch fresh content.
+- The new content shows up on the next request. On Vercel, the Data Cache updates at runtime and revalidation propagates quickly across regions.
+
+## 8) Mermaid diagram for /de/freestyle
+
+<Mermaid>
+  {`flowchart TD
+A["Editor updates page in Sanity Studio<br/>Document: _type='page'<br/>slug.current='/de/freestyle'"] --> B[Editor clicks Publish]
+B --> C[Sanity triggers webhook<br/>sanity-operation: update<br/>POST to Next.js /api/revalidate]
+C --> D[Next.js Route Handler: app/api/revalidate/route.ts]
+D --> E{Signature valid?<br/>parseBody + SANITY_REVALIDATE_SECRET}
+E -- No --> F[401 Invalid Signature]
+E -- Yes --> G["Compute tag from payload<br/>tag = 'sanity' + '/de/freestyle'"]
+G --> H["revalidateTag('sanity/de/freestyle')"]
+H --> I[Vercel/Next Data Cache marks tag stale/expired]
+I --> J[Next request to /de/freestyle]
+J --> K["Page fetch runs again<br/>GROQ query for '/de/freestyle'<br/>tag 'sanity/de/freestyle'"]
+K --> L[Updated HTML + metadata served]`}
+</Mermaid>
+
+## 8.1) Sequence diagram for /de/snowparks
+
+<Mermaid>
+  {`sequenceDiagram
+  participant E as Editor (Sanity Studio)
+  participant S as Sanity Webhook
+  participant R as Next.js /api/revalidate (Route Handler)
+  participant C as Next.js Data Cache (tagged)
+  participant P as /de/snowparks page request
+
+E->>S: Publish update to page slug "/de/snowparks"
+Note over S: sanity-operation: update
+S->>R: POST webhook payload + signature
+R->>R: Verify signature (parseBody + SANITY_REVALIDATE_SECRET)
+alt invalid signature
+R-->>S: 401 Invalid Signature
+else valid signature
+R->>C: revalidateTag("sanity/de/snowparks")
+Note over C: cache entries for tag marked stale/expired
+R-->>S: 200 { revalidated: true }
+end
+
+P->>C: Next request: GET /de/snowparks
+Note over C: cached tag was invalidated
+C->>P: Next fetches fresh Sanity data + renders page again`}
+
+</Mermaid>
+
+## 9) A tiny junior dev checklist
+
+If a marketing page does not update after publish, check these in order:
+
+1. Does the page fetch use a tag? (In this case it does: `sanity/de/freestyle`.)
+2. Does the webhook send the slug in the exact format the handler expects? (`body.slug` should be "/de/freestyle".)
+3. Does the revalidation tag exactly match the fetch tag? Any mismatch means no update.
+4. Was the webhook signature valid?
+
+## Optional note (for accuracy in your blog)
+
+Depending on the Next.js version, you may call `revalidateTag(tag)` or `revalidateTag(tag, 'max')` to enable stale-while-revalidate semantics. The exact form depends on the Next.js version you are on.
