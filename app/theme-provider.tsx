@@ -3,11 +3,7 @@
 import type { ReactNode } from 'react'
 import { ThemeProvider } from 'next-themes'
 
-export function ThemeProviderWrapper({
-  children,
-}: {
-  children: ReactNode
-}) {
+export function ThemeProviderWrapper({ children }: { children: ReactNode }) {
   return (
     <ThemeProvider
       enableSystem={true}
@@ -19,4 +15,3 @@ export function ThemeProviderWrapper({
     </ThemeProvider>
   )
 }
-

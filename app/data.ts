@@ -5,6 +5,8 @@ type Project = {
   video?: string
   image?: string
   id: string
+  category: 'professional' | 'personal'
+  platform: string[]
 }
 
 type WorkExperience = {
@@ -37,13 +39,17 @@ export const PROJECTS: Project[] = [
     //   'https://res.cloudinary.com/read-cv/video/upload/t_v_b/v1/1/profileItems/W2azTw5BVbMXfj7F53G92hMVIn32/newProfileItem/d898be8a-7037-4c71-af0c-8997239b050d.mp4?_a=DATAdtAAZAA0',
     image: './LAAX.png',
     id: 'project1',
+    category: 'professional',
+    platform: ['nextjs', 'sanity', 'apple', 'playstore'],
   },
   {
     name: 'Céhèrem',
-    description: 'Plateform to manage customer relationships',
+    description: 'CRM to manage business creation process',
     link: 'https://ceherem.com/',
     image: './CRM.png',
     id: 'project2',
+    category: 'professional',
+    platform: ['vite', 'express'],
   },
   {
     name: 'Hero App',
@@ -51,6 +57,8 @@ export const PROJECTS: Project[] = [
     link: 'https://hero-app.org/',
     image: './hero.png',
     id: 'project3',
+    category: 'personal',
+    platform: ['vite', 'expo', 'apple', 'playstore'],
   },
   {
     name: 'Dunk Hunt',
@@ -58,25 +66,53 @@ export const PROJECTS: Project[] = [
     link: 'https://duck-hunt-seven.vercel.app/',
     image: './duck.png',
     id: 'project4',
+    category: 'personal',
+    platform: ['html5', 'css'],
+  },
+  {
+    name: 'Choose Your Team',
+    description: 'A game to choose your team',
+    link: '/choose-your-team',
+    image: './choose-your-team.png',
+    id: 'project5',
+    category: 'personal',
+    platform: ['apple', 'playstore'],
+  },
+  {
+    name: 'Selegrow',
+    description: 'LinkedIn automation tool',
+    link: 'https://app.grow.selego.co/',
+    image: './selegrow.png',
+    id: 'project6',
+    category: 'professional',
+    platform: ['vite', 'expo', 'express'],
   },
 ]
 
 export const WORK_EXPERIENCE: WorkExperience[] = [
   {
     company: 'Selego',
-    title: 'Developer',
-    start: '2024',
+    title: 'Full Stack Developer',
+    start: '2023',
     end: 'Present',
     link: 'https://selego.co',
     id: 'work1',
   },
   {
     company: 'Saint-Gobain',
-    title: 'Head of Saint-Gobain Solutions',
-    start: '2020',
+    title: 'Solutions Integration Manager - Northern France',
+    start: '2022',
     end: '2023',
     link: 'https://saint-gobain.com',
     id: 'work2',
+  },
+  {
+    company: 'Saint-Gobain PAM',
+    title: 'Sales & Specification Engineer',
+    start: '2020',
+    end: '2018',
+    link: 'https://saint-gobain.com',
+    id: 'work3',
   },
 ]
 
