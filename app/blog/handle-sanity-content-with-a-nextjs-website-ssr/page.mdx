@@ -1,0 +1,199 @@
+# Handle CMS content with a NextJS website (SSR)
+
+This is a simple walkthrough on how we update the content from a CMS into a SSR website.
+
+---
+
+## 1. Introduction
+
+### Sanity
+
+Sanity is our headless CMS. Editors work in Sanity Studio, where they update structured content (documents) like our marketing pages (`_type: "page"`). Sanity Studio is open-source, **real-time collaborative**, and is generated from schemas that developers define (so editors get a safe UI without editing code).
+
+### Next.js
+
+Next.js (App Router) renders our website. For marketing pages, we want:
+
+- Fast page loads (so we cache rendering + data)
+- Fresh content right after marketing publishes updates
+
+Next.js achieves performance by caching work on the server (data and rendered output). By default, it “caches as much as possible” to reduce cost and improve performance.
+
+And importantly: **revalidation** is the mechanism that lets us update cached content without rebuilding the whole app.
+
+## 2. The problem: marketing content changes, but cached pages do not magically update
+
+In LAAX, a marketing page (example: `/de/freestyle`) is stored in Sanity as a document with:
+
+- `_type: "page"`
+- `slug.current: "/de/freestyle"`
+- content slices (slices: [...])
+- SEO fields (metaTitle, metaDescription, etc.)
+
+On the Next.js side, the marketing route:
+
+- Fetches that document from Sanity
+- Renders it on the server (and caches the result for performance)
+
+So the real problem is:
+
+> If the content is cached for speed, how do we ensure visitors see the latest published version right after marketing updates a page?
+
+## 3. What are the possible technical approaches?
+
+Here are the realistic options, and why tag-based revalidation is the best fit for LAAX marketing pages.
+
+### Option A: Redeploy the site on every publish (Deploy Hook)
+
+You can trigger a Vercel deployment via a “Deploy Hook” (an HTTP endpoint that starts a new deployment + build step).
+
+Pros:
+
+- Simple mental model: “publish = rebuild”
+
+Cons:
+
+- Heavy: every publish triggers a build pipeline
+- Slow for editors (minutes, not seconds)
+- Overkill: even small text changes rebuild everything
+
+This is why “redeploy on publish” isn’t a good default for frequently-edited marketing pages.
+
+### Option B: Disable caching, always fetch live (pure SSR on every request)
+
+Next.js lets you opt out of caching so data is fetched on every request (e.g. cache: 'no-store' or revalidate: 0).
+
+Pros:
+
+- Always fresh (no cache to invalidate)
+
+Cons:
+
+- Slower pages (every request hits Sanity/API)
+- Higher runtime cost
+- More load on external services
+- Less resilient to temporary API slowdowns
+
+Great for truly dynamic data. Not ideal for marketing pages where content changes are “event driven” (publish) and reads are high.
+
+### Option C: Time-based revalidation (ISR-like behavior)
+
+You can set a time window: “cache this for N seconds, then refresh” using `next: { revalidate: number }`.
+
+Pros:
+
+- Simple to implement
+- Still fast most of the time
+
+Cons:
+
+- Not instant: content can be stale until the interval expires
+- You end up choosing between “fresh but expensive” vs “cheap but stale sometimes”
+
+Marketing often wants updates visible quickly after publishing, not “within the next hour”.
+
+### Option D: Path-based on-demand revalidation (revalidatePath)
+
+You can invalidate a specific path: revalidatePath('/de/freestyle').
+
+Pros:
+
+- Very direct: “revalidate this page”
+
+Cons:
+
+- It targets a route, not shared data dependencies
+
+Next.js explicitly notes that revalidatePath refreshes that path, while other pages using the same underlying data can remain stale unless their tags are also invalidated.
+
+Path-based is useful, but for CMS content it’s often cleaner to invalidate “the content unit” (the page document) rather than only “one URL”.
+
+### Option E: Tag-based on-demand revalidation (revalidateTag)
+
+Next.js allows you to associate cached data with tags and then invalidate all cached entries with that tag by calling revalidateTag(tag).
+
+On Vercel, tag-based revalidation is a first-class feature of the Data Cache, and on-demand revalidation propagates very quickly across regions (Vercel mentions propagation within ~300ms).
+
+#### Why tag revalidation is the best choice for LAAX marketing
+
+- Granular: update only what changed (e.g. sanity/de/freestyle)
+- Fast: users keep cached performance, but updates become visible right after publish + next visit
+- Scalable: works well as the number of pages grows
+- Clean contract: “This page uses tag X” ↔ “Webhook invalidates tag X”
+
+#### revalidateTag(...)
+
+1. Tag the Sanity fetch for the page  
+   In the marketing route, we fetch the page document and attach a tag that identifies the page.  
+   For `/de/freestyle`, the tag is: `sanity/de/freestyle`  
+   This tag is derived from the Sanity slug (`/de/freestyle`) and the route params.  
+   This idea maps to Next.js’ “fetch tags” feature: `fetch(..., { next: { tags: [...] } })`.
+
+2. Sanity triggers a webhook on publish  
+   Sanity webhooks can trigger when a document is created, updated, or deleted. By default they fire on published changes (not on every keystroke draft update).  
+   Sanity also includes useful headers like `sanity-operation: create / update / delete`.  
+   And you can configure a secret so the receiver can verify the webhook really came from your Sanity project (the secret is hashed and included in request headers).
+
+3. Next.js receives the webhook on `/api/revalidate`  
+   LAAX exposes a Next.js Route Handler (POST /api/revalidate) that validates the signature (shared secret), extracts the slug, and calls `revalidateTag("sanity" + slug)`.  
+   This is exactly the pattern recommended by next-sanity: use parseBody(...) to validate the webhook signature and then run revalidation logic.
+
+4. What actually happens after `revalidateTag(...)`?  
+   This is the key point that people often misunderstand:  
+   Vercel does not “redeploy” your site here. It invalidates cached data. The page is refreshed when it’s next requested.  
+   Next.js describes revalidateTag as invalidating cached data on-demand, and notes that fresh data is only fetched when pages using that tag are next visited (so you don’t accidentally trigger a re-render storm).  
+   Vercel’s Data Cache docs describe the same runtime behavior: invalidation marks cache entries stale in every region, and the next request triggers revalidation and updates the cache globally.
+
+## 4. Mermaid: publish /de/freestyle → invalidate tag → next visit refreshes
+
+<Mermaid>
+  {`sequenceDiagram
+participant E as Editor (Sanity Studio)
+participant W as Sanity Webhook
+participant R as Next.js Route Handler (/api/revalidate)
+participant DC as Next.js/Vercel Data Cache (tagged)
+participant API as Sanity Content API
+participant U as Visitor (GET /de/freestyle)
+
+E->>W: Publish update to page slug "/de/freestyle"
+Note over W: sanity-operation: update (published change)
+
+W->>R: POST webhook payload + signature
+R->>R: Verify signature (parseBody + SANITY_REVALIDATE_SECRET)
+
+alt invalid signature
+R-->>W: 401 Invalid Signature
+else valid signature
+R->>DC: revalidateTag("sanity/de/freestyle")
+Note over DC: tag marked stale (cache invalidated)
+R-->>W: 200 { revalidated: true }
+end
+
+U->>DC: Request page /de/freestyle
+
+alt cache is fresh
+DC-->>U: Serve cached render/data
+else cache is stale
+DC->>API: Fetch fresh GROQ data for "/de/freestyle"
+Note over API: tagged sanity/de/freestyle
+API-->>DC: Updated page document (slices + meta)
+DC-->>U: Render updated page + store refreshed cache
+end`}
+
+</Mermaid>
+
+## 5. Conclusion: why this is powerful (and what to watch out for)
+
+### Why this approach is great
+
+- Editors publish → content updates quickly, without rebuilding the entire site
+- Users get fast pages, because most requests are served from cache
+- Granular updates, because the tag targets the exact content unit (page slug)
+- Works very well with Vercel’s cache architecture for Next.js App Router (tag-based + on-demand revalidation).
+
+### Tradeoffs / gotchas (important for juniors)
+
+- Tag strings must match exactly. If your page fetch uses `sanity/de/freestyle` but your webhook invalidates `sanity/de/Freestyle` (case change) or misses a slash, nothing updates. Tags are case-sensitive.
+- Slug uniqueness matters. In LAAX, slugs include the locale prefix (`/de/...`, `/fr/...`) which helps keep them unique and avoids accidentally revalidating the wrong page.
+- Revalidation is “next visit”, not instant rebuild. `revalidateTag` marks cached data stale; it gets refreshed when a page using that tag is requested next.
+- Secure your webhook. Webhooks are public endpoints: Sanity supports secrets (hashed in headers), and next-sanity provides helpers to verify signatures.

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { PointerEvent } from 'react'
 import { EMAIL, SOCIAL_LINKS } from '../data'
+import { cn } from '../../lib/utils'
 
 const BRUSH_SIZE = 28
 const REVEAL_THRESHOLD = 0.42
@@ -172,70 +173,82 @@ export default function MagicCardPage() {
         <div className="relative overflow-hidden rounded-3xl bg-white p-6 shadow-[0_20px_80px_-50px_rgba(24,24,27,0.6)] ring-1 ring-zinc-200/70 dark:bg-zinc-950 dark:ring-zinc-800/60 sm:p-8">
           <div
             ref={scratchAreaRef}
-            className="relative overflow-hidden rounded-2xl border border-zinc-200/70 bg-zinc-50/60 p-4 dark:border-zinc-800/60 dark:bg-zinc-900/50"
+            className={cn(
+              'relative overflow-hidden rounded-2xl border border-zinc-200/70 p-4 dark:border-zinc-800/60',
+              isCoverReady
+                ? 'bg-zinc-50/60 dark:bg-zinc-900/50'
+                : 'bg-[linear-gradient(135deg,#f6e6a6_0%,#d4a046_45%,#e7c46d_100%)]',
+            )}
           >
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
-              <div className="flex items-center gap-4">
-                <img
-                  src="/profile.jpg"
-                  alt="Julien Thomas"
-                  className="h-20 w-20 rounded-2xl object-cover ring-1 ring-zinc-200/60 dark:ring-zinc-800/60"
-                />
-                <div>
-                  <p className="text-xs uppercase tracking-[0.24em] text-zinc-500 dark:text-zinc-400">
-                    Julien Thomas
-                  </p>
-                  <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
-                    Full Stack Developer
-                  </h1>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                    Product, motion, and clean UX.
-                  </p>
+            <div
+              className={cn(
+                'flex flex-col gap-6 transition-opacity duration-200',
+                isCoverReady ? 'opacity-100' : 'opacity-0',
+              )}
+            >
+              <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
+                <div className="flex items-center gap-4">
+                  <img
+                    src="/profile.jpg"
+                    alt="Julien Thomas"
+                    className="h-20 w-20 rounded-2xl object-cover ring-1 ring-zinc-200/60 dark:ring-zinc-800/60"
+                  />
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.24em] text-zinc-500 dark:text-zinc-400">
+                      Julien Thomas
+                    </p>
+                    <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
+                      Full Stack Developer
+                    </h1>
+                    <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                      Product, motion, and clean UX.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex-1">
+                  <div className="grid gap-3 text-sm text-zinc-600 dark:text-zinc-400">
+                    <div className="flex items-center justify-between">
+                      <span className="uppercase tracking-[0.2em] text-[11px] text-zinc-500 dark:text-zinc-500">
+                        Origin
+                      </span>
+                      <span className="font-medium text-zinc-800 dark:text-zinc-200">
+                        France
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="uppercase tracking-[0.2em] text-[11px] text-zinc-500 dark:text-zinc-500">
+                        Email
+                      </span>
+                      <span className="font-medium text-zinc-800 dark:text-zinc-200">
+                        {EMAIL}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="uppercase tracking-[0.2em] text-[11px] text-zinc-500 dark:text-zinc-500">
+                        Social
+                      </span>
+                      <span className="font-medium text-zinc-800 dark:text-zinc-200">
+                        {SOCIAL_LINKS[0]?.label}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex-1">
-                <div className="grid gap-3 text-sm text-zinc-600 dark:text-zinc-400">
-                  <div className="flex items-center justify-between">
-                    <span className="uppercase tracking-[0.2em] text-[11px] text-zinc-500 dark:text-zinc-500">
-                      Origin
-                    </span>
-                    <span className="font-medium text-zinc-800 dark:text-zinc-200">
-                      France
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="uppercase tracking-[0.2em] text-[11px] text-zinc-500 dark:text-zinc-500">
-                      Email
-                    </span>
-                    <span className="font-medium text-zinc-800 dark:text-zinc-200">
-                      {EMAIL}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="uppercase tracking-[0.2em] text-[11px] text-zinc-500 dark:text-zinc-500">
-                      Social
-                    </span>
-                    <span className="font-medium text-zinc-800 dark:text-zinc-200">
-                      {SOCIAL_LINKS[0]?.label}
-                    </span>
-                  </div>
+              <div className="grid grid-cols-2 gap-3 text-xs uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400 sm:grid-cols-4">
+                <div className="rounded-2xl border border-dashed border-zinc-200 bg-zinc-50/70 px-3 py-2 text-center dark:border-zinc-800 dark:bg-zinc-900/60">
+                  Design
                 </div>
-              </div>
-            </div>
-
-            <div className="mt-4 grid grid-cols-2 gap-3 text-xs uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400 sm:grid-cols-4">
-              <div className="rounded-2xl border border-dashed border-zinc-200 bg-zinc-50/70 px-3 py-2 text-center dark:border-zinc-800 dark:bg-zinc-900/60">
-                Design
-              </div>
-              <div className="rounded-2xl border border-dashed border-zinc-200 bg-zinc-50/70 px-3 py-2 text-center dark:border-zinc-800 dark:bg-zinc-900/60">
-                Frontend
-              </div>
-              <div className="rounded-2xl border border-dashed border-zinc-200 bg-zinc-50/70 px-3 py-2 text-center dark:border-zinc-800 dark:bg-zinc-900/60">
-                Product
-              </div>
-              <div className="rounded-2xl border border-dashed border-zinc-200 bg-zinc-50/70 px-3 py-2 text-center dark:border-zinc-800 dark:bg-zinc-900/60">
-                Motion
+                <div className="rounded-2xl border border-dashed border-zinc-200 bg-zinc-50/70 px-3 py-2 text-center dark:border-zinc-800 dark:bg-zinc-900/60">
+                  Frontend
+                </div>
+                <div className="rounded-2xl border border-dashed border-zinc-200 bg-zinc-50/70 px-3 py-2 text-center dark:border-zinc-800 dark:bg-zinc-900/60">
+                  Product
+                </div>
+                <div className="rounded-2xl border border-dashed border-zinc-200 bg-zinc-50/70 px-3 py-2 text-center dark:border-zinc-800 dark:bg-zinc-900/60">
+                  Motion
+                </div>
               </div>
             </div>
 
@@ -246,15 +259,20 @@ export default function MagicCardPage() {
                 )}
                 <canvas
                   ref={canvasRef}
-                  className={`h-full w-full touch-none transition-opacity duration-200 ${
-                    isCoverReady ? 'opacity-100' : 'opacity-0'
-                  }`}
+                  className={cn(
+                    'h-full w-full touch-pan-y transition-opacity duration-200',
+                    isCoverReady ? 'opacity-100' : 'opacity-0',
+                  )}
                 />
-                <div className="pointer-events-none absolute inset-0 flex items-center justify-center"></div>
+                <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                  <span className="rounded-full border border-white/50 bg-white/20 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.4em] text-white/90 shadow-sm backdrop-blur-sm">
+                    SCRATCH HERE
+                  </span>
+                </div>
                 <button
                   ref={coinRef}
                   type="button"
-                  className="absolute left-0 top-0 z-10 grid h-16 w-16 place-items-center rounded-full shadow-[0_10px_25px_-12px_rgba(0,0,0,0.6)] touch-none select-none"
+                  className="absolute left-0 top-0 z-10 grid h-16 w-16 place-items-center rounded-full shadow-[0_10px_25px_-12px_rgba(0,0,0,0.6)] touch-pan-y select-none"
                   style={{
                     transform: `translate(${coinPosition.x - 32}px, ${coinPosition.y - 32}px)`,
                   }}
