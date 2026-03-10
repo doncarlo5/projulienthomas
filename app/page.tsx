@@ -23,6 +23,11 @@ import {
   siExpress,
   siHtml5,
   siCss,
+  siRuby,
+  siRubyonrails,
+  siReact,
+  siBrevo,
+  siSentry,
 } from 'simple-icons'
 import {
   PROJECTS,
@@ -61,6 +66,11 @@ const PLATFORM_ICONS: Record<string, SimpleIcon> = {
   express: siExpress,
   html5: siHtml5,
   css: siCss,
+  ruby: siRuby,
+  rails: siRubyonrails,
+  reactjs: siReact,
+  brevo: siBrevo,
+  sentry: siSentry,
 }
 
 type ProjectVideoProps = {
@@ -233,7 +243,8 @@ export default function Personal() {
                 <p className="text-base text-zinc-600 dark:text-zinc-400">
                   {project.description}
                 </p>
-                {project.platform.length ? (
+                {project.platform.length &&
+                project.platform.every((platform) => PLATFORM_ICONS[platform]) ? (
                   <div className="mt-2 flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
                     {project.platform.map((platform) => (
                       <PlatformIcon
@@ -268,7 +279,8 @@ export default function Personal() {
                   <p className="text-base text-zinc-600 dark:text-zinc-400">
                     {project.description}
                   </p>
-                  {project.platform.length ? (
+                  {project.platform.length &&
+                  project.platform.every((platform) => PLATFORM_ICONS[platform]) ? (
                     <div className="mt-2 flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
                       {project.platform.map((platform) => (
                         <PlatformIcon

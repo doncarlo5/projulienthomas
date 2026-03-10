@@ -2,11 +2,35 @@
 
 import { useEffect, useRef, useState } from 'react'
 import type { PointerEvent } from 'react'
+import Link from 'next/link'
 import { EMAIL, SOCIAL_LINKS } from '../data'
 import { cn } from '../../lib/utils'
 
 const BRUSH_SIZE = 28
 const REVEAL_THRESHOLD = 0.42
+const MAGIC_CARD_FACTS = [
+  {
+    label: 'Builds with taste',
+    text: 'French developer shaping products that feel polished, useful, and a little more alive than expected.',
+  },
+  {
+    label: 'Ships real products',
+    text: 'From LAAX to Cercle des Langues, Volvamed, Selegrow, and Cehèrem, the work spans travel, health, education, and SaaS.',
+  },
+  {
+    label: 'Likes the in-between',
+    text: 'Where product thinking, full-stack execution, and interactive UX meet, that is usually where I want to work.',
+  },
+] as const
+
+const MAGIC_CARD_CHIPS = [
+  'Polished interfaces',
+  'Full-stack delivery',
+  'Product instincts',
+  'Interactive moments',
+] as const
+
+const MAGIC_CARD_MOBILE_CHIPS = ['Polished interfaces', 'Full-stack delivery']
 
 type Point = { x: number; y: number }
 
@@ -160,9 +184,19 @@ export default function MagicCardPage() {
 
   return (
     <main className="space-y-8">
+      <section>
+        <Link
+          href="/"
+          className="inline-flex text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+        >
+          &lt; Return home
+        </Link>
+      </section>
+
       <section className="space-y-4">
         <p className="text-zinc-600 dark:text-zinc-400">
-          Scratch the gold layer to reveal my identity card.
+          Scratch the gold layer to reveal the part of my portfolio that likes
+          to make an entrance.
         </p>
       </section>
 
@@ -174,7 +208,7 @@ export default function MagicCardPage() {
           <div
             ref={scratchAreaRef}
             className={cn(
-              'relative overflow-hidden rounded-2xl border border-zinc-200/70 p-4 dark:border-zinc-800/60',
+              'relative mx-auto max-w-[23rem] overflow-hidden rounded-2xl border border-zinc-200/70 p-4 dark:border-zinc-800/60 sm:max-w-none',
               isCoverReady
                 ? 'bg-zinc-50/60 dark:bg-zinc-900/50'
                 : 'bg-[linear-gradient(135deg,#f6e6a6_0%,#d4a046_45%,#e7c46d_100%)]',
@@ -186,68 +220,128 @@ export default function MagicCardPage() {
                 isCoverReady ? 'opacity-100' : 'opacity-0',
               )}
             >
-              <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
                 <div className="flex items-center gap-4">
                   <img
                     src="/profile.jpg"
                     alt="Julien Thomas"
-                    className="h-20 w-20 rounded-2xl object-cover ring-1 ring-zinc-200/60 dark:ring-zinc-800/60"
+                    className="h-16 w-16 rounded-2xl object-cover ring-1 ring-zinc-200/60 dark:ring-zinc-800/60 sm:h-20 sm:w-20"
                   />
                   <div>
                     <p className="text-xs uppercase tracking-[0.24em] text-zinc-500 dark:text-zinc-400">
                       Julien Thomas
                     </p>
-                    <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
+                    <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50 sm:text-2xl">
                       Full Stack Developer
                     </h1>
-                    <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                      Product, motion, and clean UX.
+                    <p className="max-w-md text-sm text-zinc-500 dark:text-zinc-400">
+                      Building digital experiences that feel sharp, human, and
+                      worth exploring twice.
                     </p>
                   </div>
                 </div>
 
-                <div className="flex-1">
-                  <div className="grid gap-3 text-sm text-zinc-600 dark:text-zinc-400">
-                    <div className="flex items-center justify-between">
-                      <span className="uppercase tracking-[0.2em] text-[11px] text-zinc-500 dark:text-zinc-500">
-                        Origin
-                      </span>
-                      <span className="font-medium text-zinc-800 dark:text-zinc-200">
-                        France
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="uppercase tracking-[0.2em] text-[11px] text-zinc-500 dark:text-zinc-500">
-                        Email
-                      </span>
-                      <span className="font-medium text-zinc-800 dark:text-zinc-200">
-                        {EMAIL}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="uppercase tracking-[0.2em] text-[11px] text-zinc-500 dark:text-zinc-500">
-                        Social
-                      </span>
-                      <span className="font-medium text-zinc-800 dark:text-zinc-200">
-                        {SOCIAL_LINKS[0]?.label}
-                      </span>
-                    </div>
-                  </div>
+                <div className="hidden rounded-2xl border border-dashed border-zinc-200 bg-white/70 px-4 py-3 text-sm text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950/50 dark:text-zinc-400 sm:block">
+                  <p className="text-[11px] uppercase tracking-[0.26em] text-zinc-500 dark:text-zinc-500">
+                    Soft reveal
+                  </p>
+                  <p className="mt-2 max-w-xs">
+                    Not exactly a resume. More like a small field note from the
+                    way I build.
+                  </p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 text-xs uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400 sm:grid-cols-4">
-                <div className="rounded-2xl border border-dashed border-zinc-200 bg-zinc-50/70 px-3 py-2 text-center dark:border-zinc-800 dark:bg-zinc-900/60">
-                  Design
+              <div className="rounded-3xl border border-zinc-200/70 bg-white/70 p-4 dark:border-zinc-800/60 dark:bg-zinc-950/40 sm:hidden">
+                <p className="text-sm leading-6 text-zinc-600 dark:text-zinc-400">
+                  French full-stack developer building polished products with a
+                  taste for interaction, detail, and clean execution.
+                </p>
+              </div>
+
+              <div className="hidden rounded-3xl border border-zinc-200/70 bg-white/70 p-5 dark:border-zinc-800/60 dark:bg-zinc-950/40 sm:block">
+                <p className="max-w-2xl text-sm leading-7 text-zinc-600 dark:text-zinc-400">
+                  I like products with personality: the kind that solve real
+                  problems, move cleanly, and leave a stronger impression than a
+                  generic interface ever could. The best work usually lives
+                  somewhere between engineering discipline and a designer&apos;s eye
+                  for detail.
+                </p>
+              </div>
+
+              <div className="grid gap-3 sm:hidden">
+                <div className="rounded-2xl border border-zinc-200/70 bg-zinc-50/70 p-4 dark:border-zinc-800/60 dark:bg-zinc-900/50">
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-zinc-500 dark:text-zinc-500">
+                    Quick read
+                  </p>
+                  <p className="mt-3 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
+                    I build products across travel, health, education, and SaaS,
+                    with a strong bias for clarity and feel.
+                  </p>
                 </div>
-                <div className="rounded-2xl border border-dashed border-zinc-200 bg-zinc-50/70 px-3 py-2 text-center dark:border-zinc-800 dark:bg-zinc-900/60">
-                  Frontend
-                </div>
-                <div className="rounded-2xl border border-dashed border-zinc-200 bg-zinc-50/70 px-3 py-2 text-center dark:border-zinc-800 dark:bg-zinc-900/60">
-                  Product
-                </div>
-                <div className="rounded-2xl border border-dashed border-zinc-200 bg-zinc-50/70 px-3 py-2 text-center dark:border-zinc-800 dark:bg-zinc-900/60">
-                  Motion
+              </div>
+
+              <div className="hidden gap-3 sm:grid sm:grid-cols-3">
+                {MAGIC_CARD_FACTS.map((fact) => (
+                  <div
+                    key={fact.label}
+                    className="rounded-2xl border border-zinc-200/70 bg-zinc-50/70 p-4 dark:border-zinc-800/60 dark:bg-zinc-900/50"
+                  >
+                    <p className="text-[11px] uppercase tracking-[0.22em] text-zinc-500 dark:text-zinc-500">
+                      {fact.label}
+                    </p>
+                    <p className="mt-3 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
+                      {fact.text}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap gap-3 text-xs uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400 sm:hidden">
+                {MAGIC_CARD_MOBILE_CHIPS.map((chip) => (
+                  <div
+                    key={chip}
+                    className="rounded-2xl border border-dashed border-zinc-200 bg-zinc-50/70 px-3 py-2 text-center dark:border-zinc-800 dark:bg-zinc-900/60"
+                  >
+                    {chip}
+                  </div>
+                ))}
+              </div>
+
+              <div className="hidden flex-wrap gap-3 text-xs uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400 sm:flex">
+                {MAGIC_CARD_CHIPS.map((chip) => (
+                  <div
+                    key={chip}
+                    className="rounded-2xl border border-dashed border-zinc-200 bg-zinc-50/70 px-3 py-2 text-center dark:border-zinc-800 dark:bg-zinc-900/60"
+                  >
+                    {chip}
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-col gap-3 border-t border-zinc-200/70 pt-4 text-sm text-zinc-500 dark:border-zinc-800/60 dark:text-zinc-400 sm:flex-row sm:items-center sm:justify-between">
+                <p className="sm:hidden">
+                  The rest lives on the homepage.
+                </p>
+                <p className="hidden sm:block">
+                  If the scratch card did its job, you already know how to
+                  reach me.
+                </p>
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                  <a
+                    href={SOCIAL_LINKS[2]?.link ?? SOCIAL_LINKS[0]?.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors hover:text-zinc-900 dark:hover:text-zinc-200"
+                  >
+                    {SOCIAL_LINKS[2]?.label ?? SOCIAL_LINKS[0]?.label}
+                  </a>
+                  <a
+                    href={`mailto:${EMAIL}`}
+                    className="transition-colors hover:text-zinc-900 dark:hover:text-zinc-200"
+                  >
+                    {EMAIL}
+                  </a>
                 </div>
               </div>
             </div>

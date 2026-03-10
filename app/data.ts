@@ -43,15 +43,6 @@ export const PROJECTS: Project[] = [
     platform: ['nextjs', 'sanity', 'apple', 'playstore'],
   },
   {
-    name: 'Céhèrem',
-    description: 'CRM to manage business creation process',
-    link: 'https://ceherem.com/',
-    image: './CRM.png',
-    id: 'project2',
-    category: 'professional',
-    platform: ['vite', 'express'],
-  },
-  {
     name: 'Hero App',
     description: 'A fitness app to track your progress at the gym.',
     link: 'https://hero-app.org/',
@@ -79,6 +70,24 @@ export const PROJECTS: Project[] = [
     platform: ['apple', 'playstore'],
   },
   {
+    name: 'Cercle des Langues',
+    description: 'Language learning platform project',
+    link: 'https://www.cercledeslangues.com/',
+    image: './cercle-des-langues.png',
+    id: 'project8',
+    category: 'professional',
+    platform: ['ruby', 'rails', 'heroku', 'vite'],
+  },
+  {
+    name: 'Volvamed',
+    description: 'Medical platform project',
+    link: 'https://volvamed.fr/',
+    image: './volvamed.png',
+    id: 'project7',
+    category: 'professional',
+    platform: ['reactjs', 'brevo', 'sentry', 'express'],
+  },
+  {
     name: 'Selegrow',
     description: 'LinkedIn automation tool',
     link: 'https://app.grow.selego.co/',
@@ -86,6 +95,15 @@ export const PROJECTS: Project[] = [
     id: 'project6',
     category: 'professional',
     platform: ['vite', 'expo', 'express'],
+  },
+  {
+    name: 'Céhèrem',
+    description: 'CRM to manage business creation process',
+    link: 'https://ceherem.com/',
+    image: './CRM.png',
+    id: 'project2',
+    category: 'professional',
+    platform: ['vite', 'express'],
   },
 ]
 
