@@ -203,10 +203,11 @@ export default function Personal() {
       >
         <div className="flex-1">
           <p className="text-zinc-600 dark:text-zinc-400">
-            French developer with a penchant for elegant design and a
-            fascination for new technologies. By creating stunning and
-            user-friendly websites or app, I appreciate discovering new
-            features.
+            Full-stack developer with a business background. I help companies go
+            from zero to launch — whether it's a platform handling 100K+ monthly
+            visits or a business tool managing thousands of customers. Based in
+            Barcelona, powered by curiosity and a healthy obsession with new
+            tech.
           </p>
           <Link
             href="/magic-card"
@@ -244,7 +245,9 @@ export default function Personal() {
                   {project.description}
                 </p>
                 {project.platform.length &&
-                project.platform.every((platform) => PLATFORM_ICONS[platform]) ? (
+                project.platform.every(
+                  (platform) => PLATFORM_ICONS[platform],
+                ) ? (
                   <div className="mt-2 flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
                     {project.platform.map((platform) => (
                       <PlatformIcon
@@ -280,7 +283,9 @@ export default function Personal() {
                     {project.description}
                   </p>
                   {project.platform.length &&
-                  project.platform.every((platform) => PLATFORM_ICONS[platform]) ? (
+                  project.platform.every(
+                    (platform) => PLATFORM_ICONS[platform],
+                  ) ? (
                     <div className="mt-2 flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
                       {project.platform.map((platform) => (
                         <PlatformIcon
