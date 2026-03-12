@@ -127,8 +127,8 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
   {
     company: 'Saint-Gobain PAM',
     title: 'Sales & Specification Engineer',
-    start: '2020',
-    end: '2018',
+    start: '2018',
+    end: '2022',
     link: 'https://saint-gobain.com',
     id: 'work3',
   },
@@ -147,19 +147,6 @@ export const BLOG_POSTS: BlogPost[] = [
       'A look back at my experience of building the LAAX platform and what I learned',
     link: '/blog/one-destination-plateform-laax-success-story',
     uid: 'blog-3',
-  },
-  {
-    title: 'What I learned from my experience of sales',
-    description: 'A look back at my experience of sales and what I learned',
-    link: '/blog/what-i-learned-from-my-experience-of-sales',
-    uid: 'blog-2',
-  },
-  {
-    title: 'Why I left my job to start a developer career',
-    description:
-      'A deep dive into my decision to leave my job and start a developer career',
-    link: '/blog/why-i-left-my-job-to-start-a-developer-career',
-    uid: 'blog-1',
   },
 ]
 
