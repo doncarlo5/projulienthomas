@@ -222,7 +222,7 @@ export default function Personal() {
         transition={TRANSITION_SECTION}
       >
         <h3 className="mb-5 text-lg font-medium">Professional Projects</h3>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div className="grid grid-cols-2 gap-6">
           {PROJECTS.filter(
             (project) => project.category === 'professional',
           ).map((project) => (
@@ -259,7 +259,7 @@ export default function Personal() {
           ))}
         </div>
         <h3 className="mt-10 mb-5 text-lg font-medium">Personal Projects</h3>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div className="grid grid-cols-2 gap-6">
           {PROJECTS.filter((project) => project.category === 'personal').map(
             (project) => (
               <div key={project.name} className="space-y-2">
