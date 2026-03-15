@@ -203,11 +203,10 @@ export default function Personal() {
       >
         <div className="flex-1">
           <p className="text-zinc-600 dark:text-zinc-400">
-            Full-stack developer with a business background. I help companies go
-            from zero to launch — whether it's a platform handling 100K+ monthly
-            visits or a business tool managing thousands of customers. Based in
-            Barcelona, powered by curiosity and a healthy obsession with new
-            tech.
+            Full-stack developer, project manager, client partner. I help
+            companies launch digital products that scale; from a 100K+ monthly
+            visits resort platform to business tools serving thousands. Based in
+            Barcelona.
           </p>
           <Link
             href="/magic-card"
