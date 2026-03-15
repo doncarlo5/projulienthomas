@@ -230,7 +230,16 @@ export default function Personal() {
             <div key={project.name} className="space-y-2">
               <div className="relative rounded-2xl bg-zinc-50/40 p-1 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950/40 dark:ring-zinc-800/50">
                 {project.video && <ProjectVideo src={project.video} />}
-                {project.image && <ProjectImage src={project.image} />}
+                {project.image && (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block"
+                  >
+                    <ProjectImage src={project.image} />
+                  </a>
+                )}
               </div>
               <div className="px-1">
                 <a
@@ -268,7 +277,16 @@ export default function Personal() {
               <div key={project.name} className="space-y-2">
                 <div className="relative rounded-2xl bg-zinc-50/40 p-1 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950/40 dark:ring-zinc-800/50">
                   {project.video && <ProjectVideo src={project.video} />}
-                  {project.image && <ProjectImage src={project.image} />}
+                  {project.image && (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      <ProjectImage src={project.image} />
+                    </a>
+                  )}
                 </div>
                 <div className="px-1">
                   <a
