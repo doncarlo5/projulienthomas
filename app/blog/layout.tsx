@@ -1,51 +1,41 @@
 'use client'
-import { TextMorph } from '@/components/ui/text-morph'
+
 import { ScrollProgress } from '@/components/ui/scroll-progress'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
-function BackButton() {
-  const router = useRouter()
-
-  return (
-    <button
-      onClick={() => {
-        if (window.history.length > 1) {
-          router.back()
-          return
-        }
-        router.push('/')
-      }}
-      className="font-base flex items-center gap-1 py-2 pr-10 text-center text-sm text-zinc-500 transition-colors dark:text-zinc-400"
-      type="button"
-      aria-label="Go to previous page"
-    >
-      <span>←</span>
-    </button>
-  )
-}
-
 function CopyButton() {
-  const [text, setText] = useState('Copy')
-  const currentUrl = typeof window !== 'undefined' ? window.location.href : ''
+  const [status, setStatus] = useState<'idle' | 'copied' | 'error'>('idle')
 
   useEffect(() => {
-    setTimeout(() => {
-      setText('Copy')
-    }, 2000)
-  }, [text])
+    if (status === 'idle') return
+
+    const timeout = window.setTimeout(() => setStatus('idle'), 2000)
+    return () => window.clearTimeout(timeout)
+  }, [status])
+
+  const label =
+    status === 'copied'
+      ? 'Copied'
+      : status === 'error'
+        ? 'Copy failed'
+        : 'Copy link'
 
   return (
     <button
-      onClick={() => {
-        setText('Copied')
-        navigator.clipboard.writeText(currentUrl)
+      onClick={async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href)
+          setStatus('copied')
+        } catch {
+          setStatus('error')
+        }
       }}
-      className="font-base flex items-center gap-1 text-center text-sm text-zinc-500 transition-colors dark:text-zinc-400"
+      className="rounded-sm py-2 text-sm text-zinc-500 transition-colors hover:text-zinc-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-zinc-500 dark:text-zinc-400 dark:hover:text-zinc-50"
       type="button"
+      aria-live="polite"
     >
-      <TextMorph>{text}</TextMorph>
-      <span>URL</span>
+      {label}
     </button>
   )
 }
@@ -57,21 +47,18 @@ export default function LayoutBlogPost({
 }) {
   return (
     <>
-      <div className="pointer-events-none fixed top-0 left-0 z-10 h-12 w-full bg-gray-100 to-transparent backdrop-blur-xl [-webkit-mask-image:linear-gradient(to_bottom,black,transparent)] dark:bg-zinc-950" />
-      <ScrollProgress
-        className="fixed top-0 z-20 h-0.5 bg-gray-300 dark:bg-zinc-600"
-        springOptions={{
-          bounce: 0,
-        }}
-      />
+      <ScrollProgress className="fixed top-0 z-20 h-px bg-zinc-950 dark:bg-zinc-50" />
 
-      <div className="absolute top-24 right-4">
+      <div className="mx-auto mt-10 flex max-w-[45rem] items-center justify-between border-b border-zinc-200 pb-4 dark:border-zinc-800">
+        <Link
+          href="/"
+          className="rounded-sm py-2 text-sm text-zinc-500 transition-colors hover:text-zinc-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-zinc-500 dark:text-zinc-400 dark:hover:text-zinc-50"
+        >
+          ← Portfolio
+        </Link>
         <CopyButton />
       </div>
-      <div className="absolute top-8 left-4">
-        <BackButton />
-      </div>
-      <main className="prose prose-gray prose-h4:prose-base dark:prose-invert prose-h1:text-xl prose-h1:font-medium prose-h2:mt-12 prose-h2:scroll-m-20 prose-h2:text-lg prose-h2:font-medium prose-h3:text-base prose-h3:font-medium prose-h4:font-medium prose-h5:text-base prose-h5:font-medium prose-h6:text-base prose-h6:font-medium prose-strong:font-medium mt-24 pb-20">
+      <main className="prose prose-zinc prose-headings:text-balance prose-p:text-pretty prose-a:decoration-zinc-300 prose-a:underline-offset-4 prose-figcaption:text-sm prose-figcaption:text-zinc-500 prose-h1:text-4xl prose-h1:leading-[1.08] prose-h1:font-semibold prose-h1:tracking-[-0.035em] prose-h2:mt-16 prose-h2:scroll-m-20 prose-h2:text-2xl prose-h2:font-semibold prose-h2:tracking-[-0.02em] prose-h3:text-lg prose-h3:font-medium prose-h4:text-base prose-h4:font-medium prose-h5:text-base prose-h5:font-medium prose-h6:text-base prose-h6:font-medium prose-strong:font-semibold dark:prose-invert sm:prose-h1:text-5xl mx-auto mt-14 max-w-[45rem] pb-24">
         {children}
       </main>
     </>

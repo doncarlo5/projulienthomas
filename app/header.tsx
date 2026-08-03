@@ -1,33 +1,60 @@
-'use client'
-import { TextEffect } from '@/components/ui/text-effect'
+import Image from 'next/image'
 import Link from 'next/link'
 
 export function Header() {
   return (
-    <header className="mb-8 flex items-center justify-between">
-      <div className="flex items-center gap-2">
-        <div className="h-10 w-10 rounded-full bg-zinc-100 dark:bg-zinc-800">
-          <img
-            src="/profile.jpg"
-            alt="logo"
-            className="h-full w-full rounded-full object-cover"
-          />
-        </div>
-        <div>
-          <Link href="/" className="font-medium text-black dark:text-white">
+    <header className="border-border flex items-center justify-between border-b py-5">
+      <Link
+        href="/"
+        className="group flex items-center gap-3"
+        aria-label="Julien Thomas, home"
+      >
+        <Image
+          src="/profile.jpg"
+          alt="Portrait of Julien Thomas"
+          width={36}
+          height={36}
+          sizes="36px"
+          className="h-9 w-9 rounded-lg object-cover grayscale transition-[filter] duration-200 group-hover:grayscale-0"
+        />
+        <span className="leading-tight">
+          <span className="text-foreground block text-sm font-medium">
             Julien Thomas
-          </Link>
-          <TextEffect
-            as="p"
-            preset="fade"
-            per="char"
-            className="text-zinc-600 dark:text-zinc-500"
-            delay={0.5}
-          >
-            Full Stack Developer
-          </TextEffect>
-        </div>
-      </div>
+          </span>
+          <span className="text-muted-foreground block text-xs">
+            Full-stack developer
+          </span>
+        </span>
+      </Link>
+
+      <nav aria-label="Primary navigation">
+        <ul className="text-muted-foreground flex items-center gap-4 text-sm sm:gap-6">
+          <li>
+            <Link
+              href="/#work"
+              className="hover:text-foreground transition-colors duration-200"
+            >
+              Work
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/#notes"
+              className="hover:text-foreground transition-colors duration-200"
+            >
+              Notes
+            </Link>
+          </li>
+          <li className="hidden sm:block">
+            <Link
+              href="/#contact"
+              className="hover:text-foreground transition-colors duration-200"
+            >
+              Contact
+            </Link>
+          </li>
+        </ul>
+      </nav>
     </header>
   )
 }

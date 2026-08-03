@@ -1,417 +1,382 @@
-'use client'
-import { motion } from 'motion/react'
-import { XIcon } from 'lucide-react'
-import { Spotlight } from '@/components/ui/spotlight'
-import { Magnetic } from '@/components/ui/magnetic'
-import {
-  MorphingDialog,
-  MorphingDialogTrigger,
-  MorphingDialogContent,
-  MorphingDialogClose,
-  MorphingDialogContainer,
-} from '@/components/ui/morphing-dialog'
+import Image from 'next/image'
 import Link from 'next/link'
-import { AnimatedBackground } from '@/components/ui/animated-background'
-import type { SimpleIcon } from 'simple-icons'
+import type { ReactNode } from 'react'
 import {
-  siApple,
-  siGoogleplay,
-  siNextdotjs,
-  siSanity,
-  siVite,
-  siExpo,
-  siExpress,
-  siHtml5,
-  siCss,
-  siRuby,
-  siRubyonrails,
-  siReact,
-  siBrevo,
-  siSentry,
-} from 'simple-icons'
-import {
-  PROJECTS,
-  WORK_EXPERIENCE,
   BLOG_POSTS,
   EMAIL,
+  PROJECTS,
   SOCIAL_LINKS,
+  WORK_EXPERIENCE,
+  type FeaturedProject,
 } from './data'
 
-const VARIANTS_CONTAINER = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
+const FEATURED_PROJECTS = PROJECTS.filter(
+  (project): project is FeaturedProject => project.featured === true,
+)
+
+const ARCHIVE_PROJECTS = PROJECTS.filter((project) => !project.featured)
+
+function isExternalLink(href: string) {
+  return href.startsWith('http')
 }
 
-const VARIANTS_SECTION = {
-  hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
-  visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
-}
-
-const TRANSITION_SECTION = {
-  duration: 0.3,
-}
-
-const PLATFORM_ICONS: Record<string, SimpleIcon> = {
-  apple: siApple,
-  playstore: siGoogleplay,
-  nextjs: siNextdotjs,
-  vite: siVite,
-  sanity: siSanity,
-  expo: siExpo,
-  express: siExpress,
-  html5: siHtml5,
-  css: siCss,
-  ruby: siRuby,
-  rails: siRubyonrails,
-  reactjs: siReact,
-  brevo: siBrevo,
-  sentry: siSentry,
-}
-
-type ProjectVideoProps = {
-  src: string
-}
-
-type ProjectImageProps = {
-  src: string
-}
-
-function ProjectVideo({ src }: ProjectVideoProps) {
-  return (
-    <MorphingDialog
-      transition={{
-        type: 'spring',
-        bounce: 0,
-        duration: 0.3,
-      }}
-    >
-      <MorphingDialogTrigger>
-        <video
-          src={src}
-          autoPlay
-          loop
-          muted
-          className="aspect-video w-full cursor-zoom-in rounded-xl"
-        />
-      </MorphingDialogTrigger>
-      <MorphingDialogContainer>
-        <MorphingDialogContent className="relative aspect-video rounded-2xl bg-zinc-50 p-1 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950 dark:ring-zinc-800/50">
-          <video
-            src={src}
-            autoPlay
-            loop
-            muted
-            className="aspect-video h-[50vh] w-full rounded-xl md:h-[70vh]"
-          />
-        </MorphingDialogContent>
-        <MorphingDialogClose
-          className="fixed top-6 right-6 h-fit w-fit rounded-full bg-white p-1"
-          variants={{
-            initial: { opacity: 0 },
-            animate: {
-              opacity: 1,
-              transition: { delay: 0.3, duration: 0.1 },
-            },
-            exit: { opacity: 0, transition: { duration: 0 } },
-          }}
-        >
-          <XIcon className="h-5 w-5 text-zinc-500" />
-        </MorphingDialogClose>
-      </MorphingDialogContainer>
-    </MorphingDialog>
-  )
-}
-
-function ProjectImage({ src }: ProjectImageProps) {
-  return (
-    <div className="relative w-full rounded-xl">
-      <img
-        src={src}
-        alt={src}
-        className="aspect-square w-full rounded-xl object-cover"
-      />
-    </div>
-  )
-}
-
-function PlatformIcon({ platform }: { platform: string }) {
-  const icon = PLATFORM_ICONS[platform]
-
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 24"
-      className="h-4 w-4"
-      fill="currentColor"
-    >
-      <title>{icon.title}</title>
-      <path d={icon.path} />
-    </svg>
-  )
-}
-
-function MagneticSocialLink({
+function SmartLink({
+  href,
+  className,
   children,
-  link,
+  ariaLabel,
 }: {
-  children: React.ReactNode
-  link: string
+  href?: string
+  className?: string
+  children: ReactNode
+  ariaLabel?: string
 }) {
-  return (
-    <Magnetic springOptions={{ bounce: 0 }} intensity={0.3}>
+  if (!href) {
+    return <div className={className}>{children}</div>
+  }
+
+  if (isExternalLink(href)) {
+    return (
       <a
-        href={link}
-        className="group relative inline-flex shrink-0 items-center gap-[1px] rounded-full bg-zinc-100 px-2.5 py-1 text-sm text-black transition-colors duration-200 hover:bg-zinc-950 hover:text-zinc-50 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
+        href={href}
+        className={className}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={ariaLabel}
       >
         {children}
-        <svg
-          width="15"
-          height="15"
-          viewBox="0 0 15 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-3 w-3"
-        >
-          <path
-            d="M3.64645 11.3536C3.45118 11.1583 3.45118 10.8417 3.64645 10.6465L10.2929 4L6 4C5.72386 4 5.5 3.77614 5.5 3.5C5.5 3.22386 5.72386 3 6 3L11.5 3C11.6326 3 11.7598 3.05268 11.8536 3.14645C11.9473 3.24022 12 3.36739 12 3.5L12 9.00001C12 9.27615 11.7761 9.50001 11.5 9.50001C11.2239 9.50001 11 9.27615 11 9.00001V4.70711L4.35355 11.3536C4.15829 11.5488 3.84171 11.5488 3.64645 11.3536Z"
-            fill="currentColor"
-            fillRule="evenodd"
-            clipRule="evenodd"
-          ></path>
-        </svg>
       </a>
-    </Magnetic>
+    )
+  }
+
+  return (
+    <Link href={href} className={className} aria-label={ariaLabel}>
+      {children}
+    </Link>
+  )
+}
+
+function ProjectVisual({
+  project,
+  priority,
+}: {
+  project: FeaturedProject
+  priority?: boolean
+}) {
+  const isLAAX = project.id === 'project1'
+
+  return (
+    <SmartLink
+      href={project.link}
+      className="group mt-7 block"
+      ariaLabel={`Visit ${project.name} project`}
+    >
+      <figure className="border-border bg-card relative aspect-[4/3] overflow-hidden rounded-[10px] border sm:aspect-[16/9]">
+        <Image
+          src={project.image}
+          alt={project.imageAlt}
+          fill
+          priority={priority}
+          sizes="(max-width: 640px) calc(100vw - 40px), 896px"
+          className={
+            isLAAX
+              ? 'object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.01]'
+              : 'object-contain p-[8%] transition-transform duration-500 ease-out group-hover:scale-[1.01] sm:p-[6%]'
+          }
+        />
+      </figure>
+    </SmartLink>
+  )
+}
+
+function SectionHeading({
+  index,
+  title,
+  description,
+  titleId,
+}: {
+  index: string
+  title: string
+  description: string
+  titleId: string
+}) {
+  return (
+    <div className="grid gap-3 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-8">
+      <p className="text-muted-foreground font-[family-name:var(--font-geist-mono)] text-xs">
+        {index}
+      </p>
+      <div>
+        <h2
+          id={titleId}
+          className="text-2xl font-medium tracking-[-0.035em] text-balance sm:text-3xl"
+        >
+          {title}
+        </h2>
+        <p className="text-muted-foreground mt-3 max-w-[42rem] text-base leading-7 text-pretty">
+          {description}
+        </p>
+      </div>
+    </div>
   )
 }
 
 export default function Personal() {
   return (
-    <motion.main
-      className="space-y-24"
-      variants={VARIANTS_CONTAINER}
-      initial="hidden"
-      animate="visible"
-    >
-      <motion.section
-        variants={VARIANTS_SECTION}
-        transition={TRANSITION_SECTION}
+    <main className="portfolio-home pb-2">
+      <section
+        className="reveal pt-20 pb-28 sm:pt-28 sm:pb-36"
+        aria-labelledby="intro-title"
       >
-        <div className="flex-1">
-          <p className="text-zinc-600 dark:text-zinc-400">
-            Full-stack developer, project manager, client partner. I help
-            companies launch digital products that scale; from a 100K+ monthly
-            visits resort platform to business tools serving thousands. Based in
-            Barcelona.
-          </p>
-          <Link
-            href="/magic-card"
-            className="mt-4 inline-flex text-sm font-medium text-zinc-900 underline underline-offset-4 transition-colors hover:text-zinc-700 dark:text-zinc-100 dark:hover:text-zinc-300"
+        <p className="text-muted-foreground font-[family-name:var(--font-geist-mono)] text-xs">
+          Full-stack development · Product delivery
+        </p>
+        <h1
+          id="intro-title"
+          className="mt-6 max-w-[52rem] text-[clamp(2.75rem,8vw,5.75rem)] leading-[0.94] font-medium tracking-[-0.065em] text-balance"
+        >
+          I build digital products that hold up in the real world.
+        </h1>
+        <p className="text-muted-foreground mt-8 max-w-[43rem] text-lg leading-8 text-pretty sm:text-xl sm:leading-9">
+          I work across engineering, product, and client teams to turn complex
+          requirements into clear, dependable experiences—from high-traffic
+          platforms to focused business tools.
+        </p>
+        <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-3 text-sm font-medium">
+          <a
+            href="#work"
+            className="editorial-underline inline-flex items-center gap-2"
           >
-            Explore the Magic Card
-          </Link>
+            View selected work <span aria-hidden="true">↓</span>
+          </a>
+          <a
+            href={`mailto:${EMAIL}`}
+            className="editorial-underline text-muted-foreground hover:text-foreground inline-flex items-center gap-2"
+          >
+            Start a conversation <span aria-hidden="true">↗</span>
+          </a>
         </div>
-      </motion.section>
+      </section>
 
-      <motion.section
-        variants={VARIANTS_SECTION}
-        transition={TRANSITION_SECTION}
+      <section
+        id="work"
+        className="reveal reveal-delay-1 scroll-mt-8"
+        aria-labelledby="selected-work-title"
       >
-        <h3 className="mb-5 text-lg font-medium">Professional Projects</h3>
-        <div className="grid grid-cols-2 gap-6">
-          {PROJECTS.filter(
-            (project) => project.category === 'professional',
-          ).map((project) => (
-            <div key={project.name} className="space-y-2">
-              <div className="relative rounded-2xl bg-zinc-50/40 p-1 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950/40 dark:ring-zinc-800/50">
-                {project.video && <ProjectVideo src={project.video} />}
-                {project.image && (
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block"
-                  >
-                    <ProjectImage src={project.image} />
-                  </a>
-                )}
-              </div>
-              <div className="px-1">
-                <a
-                  className="font-base group relative inline-block font-[450] text-zinc-900 dark:text-zinc-50"
-                  href={project.link}
-                  target="_blank"
-                >
-                  {project.name}
-                  <span className="absolute bottom-0.5 left-0 block h-[1px] w-full max-w-0 bg-zinc-900 transition-all duration-200 group-hover:max-w-full dark:bg-zinc-50"></span>
-                </a>
-                <p className="text-base text-zinc-600 dark:text-zinc-400">
-                  {project.description}
+        <SectionHeading
+          index="01 / Selected work"
+          title="Products shaped around real constraints."
+          description="Three recent builds where the work extended beyond writing code—into product decisions, delivery, and measurable outcomes."
+          titleId="selected-work-title"
+        />
+
+        <div className="mt-14 sm:mt-20">
+          {FEATURED_PROJECTS.map((project, index) => (
+            <article
+              key={project.id}
+              className="border-border border-t py-10 sm:py-14"
+            >
+              <div className="grid gap-6 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-8">
+                <p className="text-muted-foreground font-[family-name:var(--font-geist-mono)] text-xs tabular-nums">
+                  {String(index + 1).padStart(2, '0')} · {project.year}
                 </p>
-                {project.platform.length &&
-                project.platform.every(
-                  (platform) => PLATFORM_ICONS[platform],
-                ) ? (
-                  <div className="mt-2 flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
-                    {project.platform.map((platform) => (
-                      <PlatformIcon
-                        key={`${project.name}-${platform}`}
-                        platform={platform}
-                      />
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-            </div>
-          ))}
-        </div>
-        <h3 className="mt-10 mb-5 text-lg font-medium">Personal Projects</h3>
-        <div className="grid grid-cols-2 gap-6">
-          {PROJECTS.filter((project) => project.category === 'personal').map(
-            (project) => (
-              <div key={project.name} className="space-y-2">
-                <div className="relative rounded-2xl bg-zinc-50/40 p-1 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950/40 dark:ring-zinc-800/50">
-                  {project.video && <ProjectVideo src={project.video} />}
-                  {project.image && (
-                    <a
+                <div>
+                  <h3 className="text-3xl font-medium tracking-[-0.045em] sm:text-4xl">
+                    <SmartLink
                       href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block"
+                      className="editorial-underline"
                     >
-                      <ProjectImage src={project.image} />
-                    </a>
-                  )}
-                </div>
-                <div className="px-1">
-                  <a
-                    className="font-base group relative inline-block font-[450] text-zinc-900 dark:text-zinc-50"
-                    href={project.link}
-                    target="_blank"
-                  >
-                    {project.name}
-                    <span className="absolute bottom-0.5 left-0 block h-[1px] w-full max-w-0 bg-zinc-900 transition-all duration-200 group-hover:max-w-full dark:bg-zinc-50"></span>
-                  </a>
-                  <p className="text-base text-zinc-600 dark:text-zinc-400">
+                      {project.name} <span aria-hidden="true">↗</span>
+                    </SmartLink>
+                  </h3>
+                  <p className="text-muted-foreground mt-4 max-w-[42rem] text-lg leading-8 text-pretty">
                     {project.description}
                   </p>
-                  {project.platform.length &&
-                  project.platform.every(
-                    (platform) => PLATFORM_ICONS[platform],
-                  ) ? (
-                    <div className="mt-2 flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
-                      {project.platform.map((platform) => (
-                        <PlatformIcon
-                          key={`${project.name}-${platform}`}
-                          platform={platform}
-                        />
-                      ))}
-                    </div>
-                  ) : null}
                 </div>
               </div>
-            ),
-          )}
-        </div>
-      </motion.section>
 
-      <motion.section
-        variants={VARIANTS_SECTION}
-        transition={TRANSITION_SECTION}
-      >
-        <h3 className="mb-5 text-lg font-medium">Work Experience</h3>
-        <div className="flex flex-col space-y-2">
-          {WORK_EXPERIENCE.map((job) => (
-            <a
-              className="relative overflow-hidden rounded-2xl bg-zinc-300/30 p-px dark:bg-zinc-600/30"
-              href={job.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              key={job.id}
-            >
-              <Spotlight
-                className="from-zinc-900 via-zinc-800 to-zinc-700 blur-2xl dark:from-zinc-100 dark:via-zinc-200 dark:to-zinc-50"
-                size={64}
-              />
-              <div className="relative h-full w-full rounded-[15px] bg-white p-4 dark:bg-zinc-950">
-                <div className="relative flex w-full flex-row justify-between">
-                  <div>
-                    <h4 className="font-normal dark:text-zinc-100">
-                      {job.title}
-                    </h4>
-                    <p className="text-zinc-500 dark:text-zinc-400">
-                      {job.company}
-                    </p>
-                  </div>
-                  <p className="text-zinc-600 dark:text-zinc-400">
-                    {job.start} - {job.end}
-                  </p>
+              <ProjectVisual project={project} priority={index === 0} />
+
+              <dl className="border-border mt-7 grid gap-6 border-b pb-9 sm:grid-cols-3 sm:gap-8">
+                <div>
+                  <dt className="text-muted-foreground text-xs">Role</dt>
+                  <dd className="mt-2 text-sm leading-6">{project.role}</dd>
                 </div>
+                <div>
+                  <dt className="text-muted-foreground text-xs">Outcome</dt>
+                  <dd className="mt-2 text-sm leading-6">{project.outcome}</dd>
+                </div>
+                <div>
+                  <dt className="text-muted-foreground text-xs">
+                    {project.impactLabel ?? 'Impact'}
+                  </dt>
+                  <dd className="mt-2 text-sm leading-6">{project.impact}</dd>
+                </div>
+              </dl>
+
+              <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
+                <p className="text-muted-foreground">
+                  {project.platform.join(' · ')}
+                </p>
+                {project.caseStudyLink ? (
+                  <Link
+                    href={project.caseStudyLink}
+                    className="editorial-underline font-medium"
+                  >
+                    Read the case study <span aria-hidden="true">→</span>
+                  </Link>
+                ) : null}
               </div>
-            </a>
+            </article>
           ))}
         </div>
-      </motion.section>
 
-      <motion.section
-        variants={VARIANTS_SECTION}
-        transition={TRANSITION_SECTION}
-      >
-        <h3 className="mb-3 text-lg font-medium">Blog</h3>
-        <div className="flex flex-col space-y-0">
-          <AnimatedBackground
-            enableHover
-            className="h-full w-full rounded-lg bg-zinc-100 dark:bg-zinc-900/80"
-            transition={{
-              type: 'spring',
-              bounce: 0,
-              duration: 0.2,
-            }}
-          >
-            {BLOG_POSTS.map((post) => (
-              <Link
-                key={post.uid}
-                className="-mx-3 rounded-xl px-3 py-3"
-                href={post.link}
-                data-id={post.uid}
-              >
-                <div className="flex flex-col space-y-1">
-                  <h4 className="font-normal dark:text-zinc-100">
-                    {post.title}
-                  </h4>
-                  <p className="text-zinc-500 dark:text-zinc-400">
-                    {post.description}
-                  </p>
-                </div>
-              </Link>
+        <div className="mt-16 sm:mt-24">
+          <h3 className="text-lg font-medium tracking-[-0.02em]">
+            Project archive
+          </h3>
+          <p className="text-muted-foreground mt-2 max-w-[40rem] text-sm leading-6">
+            Professional tools and small personal products, kept intentionally
+            compact.
+          </p>
+          <ul className="border-border mt-7 border-t">
+            {ARCHIVE_PROJECTS.map((project) => (
+              <li key={project.id} className="border-border border-b">
+                <SmartLink
+                  href={project.link}
+                  className={`group grid gap-2 py-4 transition-colors duration-200 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)_7rem] sm:items-baseline sm:gap-6 ${
+                    project.link ? 'hover:text-muted-foreground' : ''
+                  }`}
+                >
+                  <span className="flex items-baseline justify-between gap-4 font-medium sm:block">
+                    {project.name}
+                    <span className="text-muted-foreground font-[family-name:var(--font-geist-mono)] text-[11px] font-normal sm:hidden">
+                      {project.category === 'professional'
+                        ? 'Client'
+                        : 'Personal'}
+                    </span>
+                  </span>
+                  <span className="text-muted-foreground text-sm leading-6">
+                    {project.description}
+                  </span>
+                  <span className="text-muted-foreground hidden text-right font-[family-name:var(--font-geist-mono)] text-[11px] sm:block">
+                    {project.category === 'professional'
+                      ? 'Client'
+                      : 'Personal'}{' '}
+                    {project.link ? <span aria-hidden="true">↗</span> : null}
+                  </span>
+                </SmartLink>
+              </li>
             ))}
-          </AnimatedBackground>
+          </ul>
         </div>
-      </motion.section>
+      </section>
 
-      <motion.section
-        variants={VARIANTS_SECTION}
-        transition={TRANSITION_SECTION}
+      <section
+        className="reveal reveal-delay-2 mt-28 sm:mt-40"
+        aria-labelledby="experience-title"
       >
-        <h3 className="mb-5 text-lg font-medium">Connect</h3>
-        <p className="mb-5 text-zinc-600 dark:text-zinc-400">
-          Feel free to contact me at{' '}
-          <a className="underline dark:text-zinc-300" href={`mailto:${EMAIL}`}>
-            {EMAIL}
-          </a>
-        </p>
-        <div className="flex items-center justify-start space-x-3">
-          {SOCIAL_LINKS.map((link) => (
-            <MagneticSocialLink key={link.label} link={link.link}>
-              {link.label}
-            </MagneticSocialLink>
+        <SectionHeading
+          index="02 / Experience"
+          title="A technical practice grounded in people."
+          description="Engineering is my current craft. Years in sales, specification, and project leadership still shape how I listen, decide, and ship."
+          titleId="experience-title"
+        />
+
+        <ol className="border-border mt-12 border-t sm:mt-16">
+          {WORK_EXPERIENCE.map((job) => (
+            <li key={job.id} className="border-border border-b">
+              <a
+                href={job.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group hover:text-muted-foreground grid gap-1 py-5 transition-colors duration-200 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)_9rem] sm:items-baseline sm:gap-6"
+              >
+                <span className="font-medium">
+                  {job.company} <span aria-hidden="true">↗</span>
+                </span>
+                <span className="text-muted-foreground text-sm">
+                  {job.title}
+                </span>
+                <span className="text-muted-foreground font-[family-name:var(--font-geist-mono)] text-[11px] tabular-nums sm:text-right">
+                  {job.start}—{job.end}
+                </span>
+              </a>
+            </li>
           ))}
+        </ol>
+      </section>
+
+      <section
+        id="notes"
+        className="reveal reveal-delay-3 mt-28 scroll-mt-8 sm:mt-40"
+        aria-labelledby="notes-title"
+      >
+        <SectionHeading
+          index="03 / Notes"
+          title="Writing from the work."
+          description="Practical notes on architecture, product decisions, and what changes when software meets real users."
+          titleId="notes-title"
+        />
+
+        <ul className="border-border mt-12 border-t sm:mt-16">
+          {BLOG_POSTS.map((post) => (
+            <li key={post.uid} className="border-border border-b">
+              <Link
+                href={post.link}
+                className="group hover:text-muted-foreground grid gap-2 py-5 transition-colors duration-200 sm:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)_4rem] sm:items-baseline sm:gap-6"
+              >
+                <span className="font-medium">
+                  {post.title} <span aria-hidden="true">→</span>
+                </span>
+                <span className="text-muted-foreground text-sm leading-6">
+                  {post.description}
+                </span>
+                <span className="text-muted-foreground font-[family-name:var(--font-geist-mono)] text-[11px] tabular-nums sm:text-right">
+                  {post.year}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section
+        id="contact"
+        className="reveal reveal-delay-4 border-border mt-28 scroll-mt-8 border-t pt-10 sm:mt-40 sm:grid sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-8 sm:pt-14"
+        aria-labelledby="contact-title"
+      >
+        <p className="text-muted-foreground font-[family-name:var(--font-geist-mono)] text-xs">
+          04 / Contact
+        </p>
+        <div className="mt-5 sm:mt-0">
+          <h2
+            id="contact-title"
+            className="max-w-[40rem] text-3xl font-medium tracking-[-0.045em] text-balance sm:text-5xl"
+          >
+            Have a useful product to build?
+          </h2>
+          <a
+            href={`mailto:${EMAIL}`}
+            className="editorial-underline mt-7 inline-block text-lg font-medium sm:text-xl"
+          >
+            {EMAIL} <span aria-hidden="true">↗</span>
+          </a>
+          <ul className="text-muted-foreground mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm">
+            {SOCIAL_LINKS.map((social) => (
+              <li key={social.label}>
+                <a
+                  href={social.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="editorial-underline hover:text-foreground"
+                >
+                  {social.label} <span aria-hidden="true">↗</span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
-      </motion.section>
-    </motion.main>
+      </section>
+    </main>
   )
 }
