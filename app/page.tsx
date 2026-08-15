@@ -16,6 +16,9 @@ const FEATURED_PROJECTS = PROJECTS.filter(
 
 const ARCHIVE_PROJECTS = PROJECTS.filter((project) => !project.featured)
 
+// iOS gives a bare ↗ emoji presentation. U+FE0E forces it back to a glyph.
+const ARROW_OUT = '↗︎'
+
 function isExternalLink(href: string) {
   return href.startsWith('http')
 }
@@ -125,7 +128,7 @@ export default function Personal() {
             href={`mailto:${EMAIL}`}
             className="editorial-underline text-muted-foreground hover:text-foreground inline-flex items-center gap-2"
           >
-            Email <span aria-hidden="true">↗</span>
+            Email <span aria-hidden="true">{ARROW_OUT}</span>
           </a>
         </div>
       </section>
@@ -137,13 +140,13 @@ export default function Personal() {
       >
         <SectionLabel id="selected-work-title">01 / Selected work</SectionLabel>
 
-        <div className="mt-8 sm:mt-10">
+        <div className="mt-6 sm:mt-8">
           {FEATURED_PROJECTS.map((project, index) => (
             <article
               key={project.id}
-              className="border-border border-t py-10 sm:py-14"
+              className="border-border border-t py-8 sm:py-14"
             >
-              <div className="grid gap-4 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-8">
+              <div className="grid gap-2 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-8">
                 <p className="text-muted-foreground font-[family-name:var(--font-geist-mono)] text-xs tabular-nums">
                   {project.year}
                 </p>
@@ -153,7 +156,7 @@ export default function Personal() {
                       href={project.link}
                       className="editorial-underline"
                     >
-                      {project.name} <span aria-hidden="true">↗</span>
+                      {project.name} <span aria-hidden="true">{ARROW_OUT}</span>
                     </SmartLink>
                   </h3>
                   <p className="text-muted-foreground mt-2 max-w-[38rem] text-base leading-7 text-pretty">
@@ -193,11 +196,11 @@ export default function Personal() {
           ))}
         </div>
 
-        <div className="mt-16 sm:mt-24">
+        <div className="mt-10 sm:mt-16">
           <h3 className="text-muted-foreground font-[family-name:var(--font-geist-mono)] text-xs">
             Archive
           </h3>
-          <ul className="border-border mt-5 border-t">
+          <ul className="border-border mt-6 border-t sm:mt-8">
             {ARCHIVE_PROJECTS.map((project) => (
               <li key={project.id} className="border-border border-b">
                 <SmartLink
@@ -221,7 +224,9 @@ export default function Personal() {
                     {project.category === 'professional'
                       ? 'Client'
                       : 'Personal'}{' '}
-                    {project.link ? <span aria-hidden="true">↗</span> : null}
+                    {project.link ? (
+                      <span aria-hidden="true">{ARROW_OUT}</span>
+                    ) : null}
                   </span>
                 </SmartLink>
               </li>
@@ -231,7 +236,7 @@ export default function Personal() {
       </section>
 
       <section
-        className="reveal reveal-delay-2 mt-28 sm:mt-40"
+        className="reveal reveal-delay-2 mt-20 sm:mt-28"
         aria-labelledby="experience-title"
       >
         <SectionLabel id="experience-title">02 / Experience</SectionLabel>
@@ -242,7 +247,7 @@ export default function Personal() {
           projects. Those sales years still shape how I run a client project.
         </p>
 
-        <ol className="border-border mt-6 border-t">
+        <ol className="border-border mt-6 border-t sm:mt-8">
           {WORK_EXPERIENCE.map((job) => (
             <li key={job.id} className="border-border border-b">
               <a
@@ -252,7 +257,7 @@ export default function Personal() {
                 className="group hover:text-muted-foreground grid gap-1 py-5 transition-colors duration-200 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)_9rem] sm:items-baseline sm:gap-6"
               >
                 <span className="font-medium">
-                  {job.company} <span aria-hidden="true">↗</span>
+                  {job.company} <span aria-hidden="true">{ARROW_OUT}</span>
                 </span>
                 <span className="text-muted-foreground text-sm">
                   {job.title}
@@ -268,12 +273,12 @@ export default function Personal() {
 
       <section
         id="notes"
-        className="reveal reveal-delay-3 mt-28 scroll-mt-8 sm:mt-40"
+        className="reveal reveal-delay-3 mt-20 scroll-mt-8 sm:mt-28"
         aria-labelledby="notes-title"
       >
         <SectionLabel id="notes-title">03 / Notes</SectionLabel>
 
-        <ul className="border-border mt-5 border-t">
+        <ul className="border-border mt-6 border-t sm:mt-8">
           {BLOG_POSTS.map((post) => (
             <li key={post.uid} className="border-border border-b">
               <Link
@@ -297,7 +302,7 @@ export default function Personal() {
 
       <section
         id="contact"
-        className="reveal reveal-delay-4 border-border mt-28 scroll-mt-8 border-t pt-10 sm:mt-40 sm:pt-14"
+        className="reveal reveal-delay-4 border-border mt-20 scroll-mt-8 border-t pt-10 sm:mt-28 sm:pt-14"
         aria-labelledby="contact-title"
       >
         <SectionLabel id="contact-title">04 / Contact</SectionLabel>
@@ -307,9 +312,9 @@ export default function Personal() {
         </p>
         <a
           href={`mailto:${EMAIL}`}
-          className="editorial-underline mt-5 inline-block text-lg font-medium tracking-[-0.02em] sm:text-xl"
+          className="editorial-underline mt-6 inline-block text-lg font-medium tracking-[-0.02em] sm:text-xl"
         >
-          {EMAIL} <span aria-hidden="true">↗</span>
+          {EMAIL} <span aria-hidden="true">{ARROW_OUT}</span>
         </a>
         <ul className="text-muted-foreground mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm">
           {SOCIAL_LINKS.map((social) => (
@@ -320,7 +325,7 @@ export default function Personal() {
                 rel="noopener noreferrer"
                 className="editorial-underline hover:text-foreground"
               >
-                {social.label} <span aria-hidden="true">↗</span>
+                {social.label} <span aria-hidden="true">{ARROW_OUT}</span>
               </a>
             </li>
           ))}
