@@ -1,7 +1,7 @@
 export const SITE_NAME = 'Julien Thomas'
 export const SITE_TITLE = 'Julien Thomas — Full-Stack Developer'
 export const SITE_DESCRIPTION =
-  'Full-stack developer building thoughtful digital products, performant web experiences, and reliable platforms.'
+  'Full-stack developer in Barcelona. I take projects end to end — architecture, product, and the client conversation.'
 
 const DEFAULT_WEBSITE_URL = 'https://projulienthomas.vercel.app'
 

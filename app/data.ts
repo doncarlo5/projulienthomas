@@ -14,11 +14,9 @@ export type FeaturedProject = ProjectBase & {
   link: string
   image: string
   imageAlt: string
-  role: string
-  outcome: string
-  impact: string
-  impactLabel?: 'Impact' | 'Scope'
   year: string
+  role: string
+  result?: string
   caseStudyLink?: string
 }
 
@@ -54,7 +52,7 @@ export const PROJECTS: Project[] = [
   {
     name: 'LAAX',
     description:
-      'A single destination platform for discovering, booking, and navigating a Swiss mountain resort.',
+      'One platform for a Swiss mountain resort: booking, ski school, live mountain data.',
     link: 'https://laax.com/',
     image: '/LAAX.webp',
     imageAlt:
@@ -64,16 +62,14 @@ export const PROJECTS: Project[] = [
     platform: ['Next.js', 'Sanity', 'MapLibre'],
     year: '2024–2026',
     featured: true,
-    role: 'Product-minded full-stack developer',
-    outcome:
-      'Three launches brought marketing, commerce, school bookings, and live mountain services into one product.',
-    impact:
-      '1.15m visitors, 3.15m page views, and 30% year-on-year growth in school revenue.',
+    role: 'Owned the ski school system end to end — booking flow, admin panel, automated emails. Started at three devs, grew to six.',
+    result: '1.15M visitors · 3.15M page views · +30% school revenue',
     caseStudyLink: '/blog/one-destination-plateform-laax-success-story',
   },
   {
     name: 'Hero App',
-    description: 'A focused strength-training companion for tracking progress.',
+    description:
+      'Strength-training tracker. Built to replace my paper notebook.',
     link: 'https://hero-app.org/',
     image: '/hero.png',
     imageAlt: 'Hero App workout tracking interface on a mobile phone',
@@ -83,8 +79,7 @@ export const PROJECTS: Project[] = [
   },
   {
     name: 'Dunk Hunt',
-    description:
-      'A browser game inspired by the rhythm and charm of the NES era.',
+    description: 'NES-era browser game.',
     link: 'https://duck-hunt-seven.vercel.app/',
     image: '/duck.png',
     imageAlt: 'Pixel-art Dunk Hunt browser game in play',
@@ -94,8 +89,7 @@ export const PROJECTS: Project[] = [
   },
   {
     name: 'Choose Your Team',
-    description:
-      'A touch-first game that divides a group into teams in seconds.',
+    description: 'Splits a group into teams with one touch.',
     link: '/choose-your-team',
     image: '/choose-your-team.png',
     imageAlt: 'Choose Your Team mobile app assigning players to colored teams',
@@ -106,43 +100,36 @@ export const PROJECTS: Project[] = [
   {
     name: 'Cercle des Langues',
     description:
-      'A digital learning platform connecting language students with tailored training.',
+      'Language-learning platform pairing students with live classes.',
     link: 'https://www.cercledeslangues.com/',
     image: '/cercle-des-langues.png',
     imageAlt: 'Screenshot of the Cercle des Langues marketing homepage',
     id: 'project8',
     category: 'professional',
-    platform: ['Ruby on Rails', 'Vite'],
+    platform: ['Ruby on Rails', 'React', 'TypeScript', 'Bun'],
     year: '2026',
     featured: true,
-    role: 'Full-stack developer',
-    outcome: 'Contributed full-stack development to its learning platform.',
-    impact: 'Ruby on Rails application work with a Vite-powered frontend.',
-    impactLabel: 'Scope',
+    role: 'Rebuilding the front end off legacy Bootstrap onto a modern stack, in a team of four on a Rails backend.',
+    result: 'Shipping September 2026',
   },
   {
     name: 'Volvamed',
-    description:
-      'A medical product designed to make complex care workflows easier to navigate.',
+    description: 'Scheduling and care workflows for medical practitioners.',
     link: 'https://volvamed.fr/',
     image: '/volvamed.png',
     imageAlt:
       'Screenshot of the Volvamed therapist agenda with scheduled appointments',
     id: 'project7',
     category: 'professional',
-    platform: ['React', 'Express', 'Brevo', 'Sentry'],
+    platform: ['React', 'Express', 'PostHog', 'Sentry'],
     year: '2026',
     featured: true,
-    role: 'Full-stack developer',
-    outcome: 'Contributed full-stack development to its digital care platform.',
-    impact:
-      'Work across the React interface, Express services, email delivery, and error monitoring.',
-    impactLabel: 'Scope',
+    role: 'Sole developer. Architecture, product, analytics, SEO, and the client relationship.',
+    result: 'In production · 10 therapists · 400+ of their clients',
   },
   {
     name: 'Selegrow',
-    description:
-      'A prospecting tool that turns LinkedIn workflows into repeatable campaigns.',
+    description: 'LinkedIn prospecting as repeatable campaigns.',
     image: '/selegrow.png',
     imageAlt: 'Selegrow campaign and prospect management interface',
     id: 'project6',
@@ -151,8 +138,7 @@ export const PROJECTS: Project[] = [
   },
   {
     name: 'Céhèrem',
-    description:
-      'A CRM for guiding customers through the business-creation process.',
+    description: 'CRM for business-creation advisors.',
     link: 'https://ceherem.com/',
     image: '/CRM.png',
     imageAlt: 'Céhèrem customer relationship management dashboard',
@@ -165,15 +151,15 @@ export const PROJECTS: Project[] = [
 export const WORK_EXPERIENCE: WorkExperience[] = [
   {
     company: 'Selego',
-    title: 'Full-stack developer',
+    title: 'Full-stack developer · Amsterdam, then Barcelona',
     start: '2023',
     end: 'Present',
     link: 'https://selego.co',
     id: 'work1',
   },
   {
-    company: 'Saint-Gobain',
-    title: 'Solutions integration manager · Northern France',
+    company: 'Saint-Gobain Solutions',
+    title: 'Prescription & lobbying · Construction industry',
     start: '2022',
     end: '2023',
     link: 'https://saint-gobain.com',
@@ -192,16 +178,14 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
 export const BLOG_POSTS: BlogPost[] = [
   {
     title: 'Handling CMS content with Next.js and SSR',
-    description:
-      'A practical walkthrough of Sanity webhooks and tag revalidation.',
+    description: 'Sanity webhooks and tag revalidation.',
     link: '/blog/handle-sanity-content-with-a-nextjs-website-ssr',
     uid: 'blog-4',
     year: '2026',
   },
   {
     title: 'One destination platform: the LAAX story',
-    description:
-      'Three launches, a mountain of stakeholders, and the results behind the build.',
+    description: 'Three launches, and the numbers behind them.',
     link: '/blog/one-destination-plateform-laax-success-story',
     uid: 'blog-3',
     year: '2026',

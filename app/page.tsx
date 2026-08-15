@@ -89,34 +89,14 @@ function ProjectVisual({
   )
 }
 
-function SectionHeading({
-  index,
-  title,
-  description,
-  titleId,
-}: {
-  index: string
-  title: string
-  description: string
-  titleId: string
-}) {
+function SectionLabel({ id, children }: { id: string; children: ReactNode }) {
   return (
-    <div className="grid gap-3 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-8">
-      <p className="text-muted-foreground font-[family-name:var(--font-geist-mono)] text-xs">
-        {index}
-      </p>
-      <div>
-        <h2
-          id={titleId}
-          className="text-2xl font-medium tracking-[-0.035em] text-balance sm:text-3xl"
-        >
-          {title}
-        </h2>
-        <p className="text-muted-foreground mt-3 max-w-[42rem] text-base leading-7 text-pretty">
-          {description}
-        </p>
-      </div>
-    </div>
+    <h2
+      id={id}
+      className="text-muted-foreground font-[family-name:var(--font-geist-mono)] text-xs"
+    >
+      {children}
+    </h2>
   )
 }
 
@@ -124,35 +104,28 @@ export default function Personal() {
   return (
     <main className="portfolio-home pb-2">
       <section
-        className="reveal pt-20 pb-28 sm:pt-28 sm:pb-36"
+        className="reveal pt-16 pb-20 sm:pt-24 sm:pb-28"
         aria-labelledby="intro-title"
       >
-        <p className="text-muted-foreground font-[family-name:var(--font-geist-mono)] text-xs">
-          Full-stack development · Product delivery
-        </p>
         <h1
           id="intro-title"
-          className="mt-6 max-w-[52rem] text-[clamp(2.75rem,8vw,5.75rem)] leading-[0.94] font-medium tracking-[-0.065em] text-balance"
+          className="max-w-[34rem] text-xl leading-8 font-medium tracking-[-0.02em] text-pretty sm:text-2xl sm:leading-9"
         >
-          I build digital products that hold up in the real world.
+          Full-stack developer in Barcelona. I take projects end to end —
+          architecture, product, and the client conversation.
         </h1>
-        <p className="text-muted-foreground mt-8 max-w-[43rem] text-lg leading-8 text-pretty sm:text-xl sm:leading-9">
-          I work across engineering, product, and client teams to turn complex
-          requirements into clear, dependable experiences—from high-traffic
-          platforms to focused business tools.
-        </p>
-        <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-3 text-sm font-medium">
+        <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3 text-sm font-medium">
           <a
             href="#work"
             className="editorial-underline inline-flex items-center gap-2"
           >
-            View selected work <span aria-hidden="true">↓</span>
+            Work <span aria-hidden="true">↓</span>
           </a>
           <a
             href={`mailto:${EMAIL}`}
             className="editorial-underline text-muted-foreground hover:text-foreground inline-flex items-center gap-2"
           >
-            Start a conversation <span aria-hidden="true">↗</span>
+            Email <span aria-hidden="true">↗</span>
           </a>
         </div>
       </section>
@@ -162,25 +135,20 @@ export default function Personal() {
         className="reveal reveal-delay-1 scroll-mt-8"
         aria-labelledby="selected-work-title"
       >
-        <SectionHeading
-          index="01 / Selected work"
-          title="Products shaped around real constraints."
-          description="Three recent builds where the work extended beyond writing code—into product decisions, delivery, and measurable outcomes."
-          titleId="selected-work-title"
-        />
+        <SectionLabel id="selected-work-title">01 / Selected work</SectionLabel>
 
-        <div className="mt-14 sm:mt-20">
+        <div className="mt-8 sm:mt-10">
           {FEATURED_PROJECTS.map((project, index) => (
             <article
               key={project.id}
               className="border-border border-t py-10 sm:py-14"
             >
-              <div className="grid gap-6 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-8">
+              <div className="grid gap-4 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-8">
                 <p className="text-muted-foreground font-[family-name:var(--font-geist-mono)] text-xs tabular-nums">
-                  {String(index + 1).padStart(2, '0')} · {project.year}
+                  {project.year}
                 </p>
                 <div>
-                  <h3 className="text-3xl font-medium tracking-[-0.045em] sm:text-4xl">
+                  <h3 className="text-xl font-medium tracking-[-0.02em] sm:text-2xl">
                     <SmartLink
                       href={project.link}
                       className="editorial-underline"
@@ -188,7 +156,7 @@ export default function Personal() {
                       {project.name} <span aria-hidden="true">↗</span>
                     </SmartLink>
                   </h3>
-                  <p className="text-muted-foreground mt-4 max-w-[42rem] text-lg leading-8 text-pretty">
+                  <p className="text-muted-foreground mt-2 max-w-[38rem] text-base leading-7 text-pretty">
                     {project.description}
                   </p>
                 </div>
@@ -196,54 +164,45 @@ export default function Personal() {
 
               <ProjectVisual project={project} priority={index === 0} />
 
-              <dl className="border-border mt-7 grid gap-6 border-b pb-9 sm:grid-cols-3 sm:gap-8">
-                <div>
-                  <dt className="text-muted-foreground text-xs">Role</dt>
-                  <dd className="mt-2 text-sm leading-6">{project.role}</dd>
-                </div>
-                <div>
-                  <dt className="text-muted-foreground text-xs">Outcome</dt>
-                  <dd className="mt-2 text-sm leading-6">{project.outcome}</dd>
-                </div>
-                <div>
-                  <dt className="text-muted-foreground text-xs">
-                    {project.impactLabel ?? 'Impact'}
-                  </dt>
-                  <dd className="mt-2 text-sm leading-6">{project.impact}</dd>
-                </div>
-              </dl>
-
-              <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
-                <p className="text-muted-foreground">
+              <div className="mt-6 grid gap-2 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-8">
+                <p className="text-muted-foreground font-[family-name:var(--font-geist-mono)] text-xs">
                   {project.platform.join(' · ')}
                 </p>
-                {project.caseStudyLink ? (
-                  <Link
-                    href={project.caseStudyLink}
-                    className="editorial-underline font-medium"
-                  >
-                    Read the case study <span aria-hidden="true">→</span>
-                  </Link>
-                ) : null}
+                <div>
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 text-sm">
+                    <p className="max-w-[34rem] leading-6 text-pretty">
+                      {project.role}
+                    </p>
+                    {project.caseStudyLink ? (
+                      <Link
+                        href={project.caseStudyLink}
+                        className="editorial-underline font-medium whitespace-nowrap"
+                      >
+                        Case study <span aria-hidden="true">→</span>
+                      </Link>
+                    ) : null}
+                  </div>
+                  {project.result ? (
+                    <p className="text-muted-foreground mt-2 text-sm tabular-nums">
+                      {project.result}
+                    </p>
+                  ) : null}
+                </div>
               </div>
             </article>
           ))}
         </div>
 
         <div className="mt-16 sm:mt-24">
-          <h3 className="text-lg font-medium tracking-[-0.02em]">
-            Project archive
+          <h3 className="text-muted-foreground font-[family-name:var(--font-geist-mono)] text-xs">
+            Archive
           </h3>
-          <p className="text-muted-foreground mt-2 max-w-[40rem] text-sm leading-6">
-            Professional tools and small personal products, kept intentionally
-            compact.
-          </p>
-          <ul className="border-border mt-7 border-t">
+          <ul className="border-border mt-5 border-t">
             {ARCHIVE_PROJECTS.map((project) => (
               <li key={project.id} className="border-border border-b">
                 <SmartLink
                   href={project.link}
-                  className={`group grid gap-2 py-4 transition-colors duration-200 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)_7rem] sm:items-baseline sm:gap-6 ${
+                  className={`group grid gap-1 py-4 transition-colors duration-200 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)_7rem] sm:items-baseline sm:gap-6 ${
                     project.link ? 'hover:text-muted-foreground' : ''
                   }`}
                 >
@@ -275,14 +234,15 @@ export default function Personal() {
         className="reveal reveal-delay-2 mt-28 sm:mt-40"
         aria-labelledby="experience-title"
       >
-        <SectionHeading
-          index="02 / Experience"
-          title="A technical practice grounded in people."
-          description="Engineering is my current craft. Years in sales, specification, and project leadership still shape how I listen, decide, and ship."
-          titleId="experience-title"
-        />
+        <SectionLabel id="experience-title">02 / Experience</SectionLabel>
 
-        <ol className="border-border mt-12 border-t sm:mt-16">
+        <p className="mt-4 max-w-[36rem] text-base leading-7 text-pretty">
+          Five years selling and specifying in the construction industry, then a
+          switch: Scrimba, a three-month bootcamp, and a long run of personal
+          projects. Those sales years still shape how I run a client project.
+        </p>
+
+        <ol className="border-border mt-6 border-t">
           {WORK_EXPERIENCE.map((job) => (
             <li key={job.id} className="border-border border-b">
               <a
@@ -311,19 +271,14 @@ export default function Personal() {
         className="reveal reveal-delay-3 mt-28 scroll-mt-8 sm:mt-40"
         aria-labelledby="notes-title"
       >
-        <SectionHeading
-          index="03 / Notes"
-          title="Writing from the work."
-          description="Practical notes on architecture, product decisions, and what changes when software meets real users."
-          titleId="notes-title"
-        />
+        <SectionLabel id="notes-title">03 / Notes</SectionLabel>
 
-        <ul className="border-border mt-12 border-t sm:mt-16">
+        <ul className="border-border mt-5 border-t">
           {BLOG_POSTS.map((post) => (
             <li key={post.uid} className="border-border border-b">
               <Link
                 href={post.link}
-                className="group hover:text-muted-foreground grid gap-2 py-5 transition-colors duration-200 sm:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)_4rem] sm:items-baseline sm:gap-6"
+                className="group hover:text-muted-foreground grid gap-1 py-5 transition-colors duration-200 sm:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)_4rem] sm:items-baseline sm:gap-6"
               >
                 <span className="font-medium">
                   {post.title} <span aria-hidden="true">→</span>
@@ -342,40 +297,35 @@ export default function Personal() {
 
       <section
         id="contact"
-        className="reveal reveal-delay-4 border-border mt-28 scroll-mt-8 border-t pt-10 sm:mt-40 sm:grid sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-8 sm:pt-14"
+        className="reveal reveal-delay-4 border-border mt-28 scroll-mt-8 border-t pt-10 sm:mt-40 sm:pt-14"
         aria-labelledby="contact-title"
       >
-        <p className="text-muted-foreground font-[family-name:var(--font-geist-mono)] text-xs">
-          04 / Contact
+        <SectionLabel id="contact-title">04 / Contact</SectionLabel>
+        <p className="mt-4 max-w-[36rem] text-base leading-7 text-pretty">
+          Currently at Selego, a startup studio in Paris and Barcelona. Open to
+          new projects — most drawn to Next.js, TanStack, and Vercel&rsquo;s
+          eve.
         </p>
-        <div className="mt-5 sm:mt-0">
-          <h2
-            id="contact-title"
-            className="max-w-[40rem] text-3xl font-medium tracking-[-0.045em] text-balance sm:text-5xl"
-          >
-            Have a useful product to build?
-          </h2>
-          <a
-            href={`mailto:${EMAIL}`}
-            className="editorial-underline mt-7 inline-block text-lg font-medium sm:text-xl"
-          >
-            {EMAIL} <span aria-hidden="true">↗</span>
-          </a>
-          <ul className="text-muted-foreground mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm">
-            {SOCIAL_LINKS.map((social) => (
-              <li key={social.label}>
-                <a
-                  href={social.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="editorial-underline hover:text-foreground"
-                >
-                  {social.label} <span aria-hidden="true">↗</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <a
+          href={`mailto:${EMAIL}`}
+          className="editorial-underline mt-5 inline-block text-lg font-medium tracking-[-0.02em] sm:text-xl"
+        >
+          {EMAIL} <span aria-hidden="true">↗</span>
+        </a>
+        <ul className="text-muted-foreground mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm">
+          {SOCIAL_LINKS.map((social) => (
+            <li key={social.label}>
+              <a
+                href={social.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="editorial-underline hover:text-foreground"
+              >
+                {social.label} <span aria-hidden="true">↗</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </section>
     </main>
   )

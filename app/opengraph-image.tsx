@@ -45,10 +45,10 @@ export default function OpenGraphImage() {
             maxWidth: 960,
           }}
         >
-          Digital products that hold up in the real world.
+          Full-stack developer in Barcelona.
         </span>
         <span style={{ color: '#6f6c65', fontSize: 25, marginTop: 32 }}>
-          Full-stack development · Product delivery
+          Architecture, product, and the client conversation.
         </span>
       </div>
     </div>,
