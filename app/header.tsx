@@ -15,7 +15,7 @@ export function Header() {
           width={36}
           height={36}
           sizes="36px"
-          className="h-9 w-9 rounded-lg object-cover grayscale transition-[filter] duration-200 group-hover:grayscale-0"
+          className="h-9 w-9 rounded-lg object-cover"
         />
         <span className="leading-tight">
           <span className="text-foreground block text-sm font-medium">
