@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { ThemeProviderWrapper } from './theme-provider'
 import { LayoutShell } from './layout-shell'
+import { EMAIL, SOCIAL_LINKS } from './data'
 import {
   SITE_DESCRIPTION,
   SITE_NAME,
@@ -10,10 +11,39 @@ import {
   WEBSITE_URL,
 } from '@/lib/constants'
 
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE_NAME,
+  url: WEBSITE_URL,
+  image: `${WEBSITE_URL}/profile.jpg`,
+  jobTitle: 'Full-stack developer',
+  email: `mailto:${EMAIL}`,
+  description: SITE_DESCRIPTION,
+  homeLocation: {
+    '@type': 'Place',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Barcelona',
+      addressCountry: 'ES',
+    },
+  },
+  worksFor: {
+    '@type': 'Organization',
+    name: 'Selego',
+    url: 'https://selego.co',
+  },
+  knowsAbout: ['Next.js', 'React', 'TypeScript', 'Node.js'],
+  sameAs: SOCIAL_LINKS.map((social) => social.link),
+}
+
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#ffffff',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f7f3eb' },
+    { media: '(prefers-color-scheme: dark)', color: '#14110e' },
+  ],
 }
 
 export const metadata: Metadata = {
@@ -41,7 +71,7 @@ export const metadata: Metadata = {
         url: '/opengraph-image',
         width: 1200,
         height: 630,
-        alt: `${SITE_NAME} — full-stack developer`,
+        alt: `${SITE_NAME}, full-stack developer`,
       },
     ],
   },
@@ -71,6 +101,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
+      </head>
       <body
         className={`${geist.variable} ${geistMono.variable} bg-background text-foreground tracking-tight antialiased`}
       >

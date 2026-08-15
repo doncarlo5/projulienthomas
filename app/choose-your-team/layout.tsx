@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { SITE_NAME } from '@/lib/constants'
 
-const title = 'Choose Your Team — Random Team Picker'
+const title = 'Choose Your Team · Random Team Picker'
 const description =
   'Split a group into random teams in seconds by placing fingers on the screen. Available for iOS and Android.'
 const path = '/choose-your-team'

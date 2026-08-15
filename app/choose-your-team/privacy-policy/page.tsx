@@ -8,7 +8,7 @@ export default function PrivacyPolicy() {
           Mobile app · Legal
         </p>
         <h1 className="mt-5 text-4xl leading-[1.05] font-medium tracking-[-0.045em] text-balance sm:text-5xl">
-          Privacy Policy — Choose Your Team
+          Privacy Policy · Choose Your Team
         </h1>
         <p className="text-muted-foreground mt-5 text-sm">
           Last updated: <time dateTime="2025-03">March 2025</time>

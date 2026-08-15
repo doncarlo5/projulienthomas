@@ -62,7 +62,7 @@ export const PROJECTS: Project[] = [
     platform: ['Next.js', 'Sanity', 'MapLibre'],
     year: '2024–2026',
     featured: true,
-    role: 'Owned the ski school system end to end — booking flow, admin panel, automated emails. Started at three devs, grew to six.',
+    role: 'Owned the ski school system end to end. Booking flow, admin panel, automated emails. Started at three devs, grew to six.',
     result: '1.15M visitors · 3.15M page views · +30% school revenue',
     caseStudyLink: '/blog/one-destination-plateform-laax-success-story',
   },

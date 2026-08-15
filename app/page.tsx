@@ -111,7 +111,7 @@ export default function Personal() {
           id="intro-title"
           className="max-w-[34rem] text-xl leading-8 font-medium tracking-[-0.02em] text-pretty sm:text-2xl sm:leading-9"
         >
-          Full-stack developer in Barcelona. I take projects end to end —
+          Full-stack developer in Barcelona. I take projects end to end:
           architecture, product, and the client conversation.
         </h1>
         <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3 text-sm font-medium">
@@ -258,7 +258,7 @@ export default function Personal() {
                   {job.title}
                 </span>
                 <span className="text-muted-foreground font-[family-name:var(--font-geist-mono)] text-[11px] tabular-nums sm:text-right">
-                  {job.start}—{job.end}
+                  {job.start}–{job.end}
                 </span>
               </a>
             </li>
@@ -303,8 +303,7 @@ export default function Personal() {
         <SectionLabel id="contact-title">04 / Contact</SectionLabel>
         <p className="mt-4 max-w-[36rem] text-base leading-7 text-pretty">
           Currently at Selego, a startup studio in Paris and Barcelona. Open to
-          new projects — most drawn to Next.js, TanStack, and Vercel&rsquo;s
-          eve.
+          new projects. Most drawn to Next.js, TanStack, and Vercel&rsquo;s eve.
         </p>
         <a
           href={`mailto:${EMAIL}`}
