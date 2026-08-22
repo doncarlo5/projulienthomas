@@ -37,12 +37,20 @@ export function Header() {
               Work
             </Link>
           </li>
-          <li>
+          <li className="hidden sm:block">
             <Link
               href="/#notes"
               className="hover:text-foreground transition-colors duration-200"
             >
               Notes
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/jt-company"
+              className="hover:text-foreground transition-colors duration-200"
+            >
+              JT Company
             </Link>
           </li>
           <li className="hidden sm:block">

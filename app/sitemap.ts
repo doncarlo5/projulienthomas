@@ -24,6 +24,7 @@ const routes = [
     priority: 0.6,
   },
   { path: '/choose-your-team', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/jt-company', changeFrequency: 'monthly', priority: 0.9 },
   {
     path: '/choose-your-team/privacy-policy',
     changeFrequency: 'yearly',
