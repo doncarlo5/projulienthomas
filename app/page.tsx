@@ -66,7 +66,7 @@ function ProjectVisual({
   project: FeaturedProject
   priority?: boolean
 }) {
-  const isLAAX = project.id === 'project1'
+  const isFullBleed = project.id === 'project1' || project.id === 'project9'
 
   return (
     <SmartLink
@@ -82,7 +82,7 @@ function ProjectVisual({
           priority={priority}
           sizes="(max-width: 640px) calc(100vw - 40px), 896px"
           className={
-            isLAAX
+            isFullBleed
               ? 'object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.01]'
               : 'object-contain p-[8%] transition-transform duration-500 ease-out group-hover:scale-[1.01] sm:p-[6%]'
           }

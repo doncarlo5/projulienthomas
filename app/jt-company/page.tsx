@@ -5,7 +5,12 @@ import { EMAIL, PROJECTS, SOCIAL_LINKS, type Project } from '../data'
 
 const ARROW_OUT = '↗︎'
 
-const STUDIO_PROJECT_IDS = new Set(['project3', 'project4', 'project5'])
+const STUDIO_PROJECT_IDS = new Set([
+  'project3',
+  'project4',
+  'project5',
+  'project9',
+])
 
 const STUDIO_PROJECTS = PROJECTS.filter((project) =>
   STUDIO_PROJECT_IDS.has(project.id),
@@ -73,7 +78,7 @@ function ProjectCard({
               priority={priority}
               sizes="(max-width: 640px) calc(100vw - 40px), 440px"
               className={`transition-transform duration-500 ease-out group-hover:scale-[1.015] ${
-                project.id === 'project1'
+                project.id === 'project1' || project.id === 'project9'
                   ? 'object-cover object-top'
                   : 'object-contain p-[8%]'
               }`}

@@ -78,6 +78,22 @@ export const PROJECTS: Project[] = [
     platform: ['Vite', 'Expo', 'iOS', 'Android'],
   },
   {
+    name: 'Les Bonnes Recettes de Maman',
+    description:
+      'A family recipe archive built to preserve and share dishes across generations.',
+    link: 'https://les-bonnes-recettes-de-maman.vercel.app/fr',
+    image: '/les-bonnes-recettes-de-maman.jpg',
+    imageAlt:
+      'Les Bonnes Recettes de Maman recipe library with food photography and recipe cards',
+    id: 'project9',
+    category: 'personal',
+    platform: ['Next.js', 'Convex', 'Vercel'],
+    year: '2026',
+    featured: true,
+    role: 'Designed and built the product end to end: multilingual recipe library, guided cooking, community contributions, and publishing tools.',
+    result: '38 family recipes published · French and English',
+  },
+  {
     name: 'Dunk Hunt',
     description: 'NES-era browser game.',
     link: 'https://duck-hunt-seven.vercel.app/',
