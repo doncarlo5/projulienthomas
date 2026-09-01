@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { EMAIL } from './data'
+import { EMAIL, SOCIAL_LINKS } from './data'
 
 export function Header() {
   return (
@@ -13,20 +13,18 @@ export function Header() {
 
       <nav className="site-links" aria-label="Primary navigation">
         <a href={`mailto:${EMAIL}`}>Email</a>
-        <a
-          href="https://github.com/doncarlo5"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          GitHub
-        </a>
-        <a
-          href="https://www.linkedin.com/in/julienthomaspro"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          LinkedIn
-        </a>
+        {SOCIAL_LINKS.filter((social) => social.label !== 'X / Twitter').map(
+          (social) => (
+            <a
+              key={social.label}
+              href={social.link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {social.label}
+            </a>
+          ),
+        )}
       </nav>
 
       <Link className="site-work-link" href="/#work">

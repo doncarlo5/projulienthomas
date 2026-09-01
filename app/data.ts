@@ -29,6 +29,7 @@ export type ProjectMedia = {
   width: number
   height: number
   layout?: 'full' | 'half'
+  crop?: 'left' | 'center' | 'right'
 }
 
 type ArchiveProject = ProjectBase & {
@@ -168,6 +169,22 @@ export const PROJECTS: Project[] = [
         width: 1728,
         height: 907,
       },
+      {
+        src: '/les-bonnes-recettes-de-maman.jpg',
+        alt: 'Recipe collection navigation detail',
+        width: 1728,
+        height: 907,
+        layout: 'half',
+        crop: 'left',
+      },
+      {
+        src: '/les-bonnes-recettes-de-maman.jpg',
+        alt: 'Recipe cards and food photography detail',
+        width: 1728,
+        height: 907,
+        layout: 'half',
+        crop: 'right',
+      },
     ],
   },
   {
@@ -216,6 +233,22 @@ export const PROJECTS: Project[] = [
         width: 1150,
         height: 1150,
       },
+      {
+        src: '/cercle-des-langues.png',
+        alt: 'Cercle des Langues navigation and learning content detail',
+        width: 1150,
+        height: 1150,
+        layout: 'half',
+        crop: 'left',
+      },
+      {
+        src: '/cercle-des-langues.png',
+        alt: 'Cercle des Langues interface detail',
+        width: 1150,
+        height: 1150,
+        layout: 'half',
+        crop: 'right',
+      },
     ],
   },
   {
@@ -243,6 +276,22 @@ export const PROJECTS: Project[] = [
         alt: 'Volvamed practitioner scheduling interface',
         width: 1280,
         height: 1280,
+      },
+      {
+        src: '/volvamed.png',
+        alt: 'Volvamed scheduling navigation detail',
+        width: 1280,
+        height: 1280,
+        layout: 'half',
+        crop: 'left',
+      },
+      {
+        src: '/volvamed.png',
+        alt: 'Volvamed appointment workflow detail',
+        width: 1280,
+        height: 1280,
+        layout: 'half',
+        crop: 'right',
       },
     ],
   },
@@ -327,3 +376,11 @@ export const SOCIAL_LINKS: SocialLink[] = [
 ]
 
 export const EMAIL = 'pro.julien.thomas@gmail.com'
+
+export const FEATURED_PROJECTS = PROJECTS.filter(
+  (project): project is FeaturedProject => project.featured === true,
+)
+
+export const ARCHIVE_PROJECTS = PROJECTS.filter(
+  (project) => project.featured !== true,
+)

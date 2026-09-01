@@ -1,14 +1,13 @@
 import Link from 'next/link'
 import {
+  ARCHIVE_PROJECTS,
   BLOG_POSTS,
   EMAIL,
-  PROJECTS,
+  FEATURED_PROJECTS,
   SOCIAL_LINKS,
   WORK_EXPERIENCE,
 } from './data'
 import { WorkShowcase } from './work-showcase'
-
-const ARCHIVE_PROJECTS = PROJECTS.filter((project) => !project.featured)
 
 export default function Personal() {
   return (
@@ -31,19 +30,29 @@ export default function Personal() {
           <ol>
             {WORK_EXPERIENCE.map((job) => (
               <li key={job.id}>
-                <span>{job.start}</span>
-                <a href={job.link} target="_blank" rel="noopener noreferrer">
-                  {job.company}
-                </a>
+                <span>
+                  {job.start}—{job.end}
+                </span>
+                <span>
+                  <a href={job.link} target="_blank" rel="noopener noreferrer">
+                    {job.company}
+                  </a>
+                  <small>{job.title}</small>
+                </span>
               </li>
             ))}
           </ol>
+          <p className="profile-context">
+            Five years in construction sales before moving into product
+            engineering. That commercial background still shapes how I lead
+            client work.
+          </p>
         </div>
 
         <div>
           <h2>Selected products</h2>
           <ul>
-            {PROJECTS.filter((project) => project.featured).map((project) => (
+            {FEATURED_PROJECTS.map((project) => (
               <li key={project.id}>{project.name}</li>
             ))}
           </ul>
@@ -115,6 +124,7 @@ export default function Personal() {
             {BLOG_POSTS.map((post) => (
               <li key={post.uid}>
                 <Link href={post.link}>{post.title}</Link>
+                <span>{post.description}</span>
                 <span>{post.year}</span>
               </li>
             ))}
@@ -122,7 +132,9 @@ export default function Personal() {
         </div>
 
         <div className="contact-block" id="contact">
-          <p>Available for ambitious product work and technical partnerships.</p>
+          <p>
+            Available for ambitious product work and technical partnerships.
+          </p>
           <a href={`mailto:${EMAIL}`}>{EMAIL} ↗︎</a>
         </div>
       </section>

@@ -3,11 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { PROJECTS, type FeaturedProject } from './data'
-
-const FEATURED_PROJECTS = PROJECTS.filter(
-  (project): project is FeaturedProject => project.featured === true,
-)
+import { FEATURED_PROJECTS, type FeaturedProject } from './data'
 
 function ProjectLink({ project }: { project: FeaturedProject }) {
   if (project.caseStudyLink) {
@@ -26,22 +22,45 @@ export function WorkShowcase() {
   const [activeProject, setActiveProject] = useState(0)
 
   useEffect(() => {
-    const projects = [...document.querySelectorAll<HTMLElement>('[data-project]')]
-    const observer = new IntersectionObserver(
+    const projects = [
+      ...document.querySelectorAll<HTMLElement>('[data-project]'),
+    ]
+    const projectObserver = new IntersectionObserver(
       (entries) => {
         const visible = entries
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
 
         if (visible) {
-          setActiveProject(Number((visible.target as HTMLElement).dataset.project))
+          setActiveProject(
+            Number((visible.target as HTMLElement).dataset.project),
+          )
         }
       },
       { rootMargin: '-20% 0px -60% 0px', threshold: [0, 0.1, 0.3] },
     )
 
-    projects.forEach((project) => observer.observe(project))
-    return () => observer.disconnect()
+    projects.forEach((project) => projectObserver.observe(project))
+
+    const media = [...document.querySelectorAll<HTMLElement>('.project-media')]
+    const mediaObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            mediaObserver.unobserve(entry.target)
+          }
+        })
+      },
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+    )
+
+    media.forEach((item) => mediaObserver.observe(item))
+
+    return () => {
+      projectObserver.disconnect()
+      mediaObserver.disconnect()
+    }
   }, [view])
 
   return (
@@ -125,8 +144,12 @@ export function WorkShowcase() {
               <div className="project-media-grid">
                 {project.media.map((media, mediaIndex) => (
                   <figure
-                    key={media.src}
-                    className={`project-media project-media--${media.layout ?? 'full'}`}
+                    key={`${media.src}-${mediaIndex}`}
+                    className={`project-media project-media--${media.layout ?? 'full'} ${
+                      media.crop
+                        ? `project-media--crop project-media--crop-${media.crop}`
+                        : ''
+                    }`}
                   >
                     <Image
                       src={media.src}
