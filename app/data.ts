@@ -18,6 +18,17 @@ export type FeaturedProject = ProjectBase & {
   role: string
   result?: string
   caseStudyLink?: string
+  statement: string
+  longDescription: string[]
+  media: ProjectMedia[]
+}
+
+export type ProjectMedia = {
+  src: string
+  alt: string
+  width: number
+  height: number
+  layout?: 'full' | 'half'
 }
 
 type ArchiveProject = ProjectBase & {
@@ -65,6 +76,59 @@ export const PROJECTS: Project[] = [
     role: 'Owned the ski school system end to end. Booking flow, admin panel, automated emails. Started at three devs, grew to six.',
     result: '1.15M visitors · 3.15M page views · +30% school revenue',
     caseStudyLink: '/blog/one-destination-plateform-laax-success-story',
+    statement: 'One destination. Every mountain experience.',
+    longDescription: [
+      'LAAX brings a complex resort ecosystem into one product: inspiration, live mountain information, accommodation, tickets, ski school, retail, and the operational tools behind them.',
+      'I owned the ski school system end to end, from product decisions and booking flows to the admin experience and automated communication. The work grew from a three-person delivery team into a six-person product team.',
+    ],
+    media: [
+      {
+        src: '/LAAX.webp',
+        alt: 'LAAX resort homepage across a mountain landscape',
+        width: 1800,
+        height: 1052,
+      },
+      {
+        src: '/laax/cover.jpg',
+        alt: 'LAAX destination experience on desktop and mobile',
+        width: 2400,
+        height: 1600,
+        layout: 'half',
+      },
+      {
+        src: '/laax/cover1.jpg',
+        alt: 'LAAX digital product interface detail',
+        width: 1620,
+        height: 1082,
+        layout: 'half',
+      },
+      {
+        src: '/laax/shop.webp',
+        alt: 'LAAX online shop experience',
+        width: 2000,
+        height: 1200,
+      },
+      {
+        src: '/laax/map.webp',
+        alt: 'Interactive LAAX mountain map',
+        width: 2200,
+        height: 1329,
+        layout: 'half',
+      },
+      {
+        src: '/laax/sanity.webp',
+        alt: 'LAAX content management interface',
+        width: 2000,
+        height: 1204,
+        layout: 'half',
+      },
+      {
+        src: '/laax/visitor-chart.png',
+        alt: 'LAAX visitor growth chart',
+        width: 2398,
+        height: 1024,
+      },
+    ],
   },
   {
     name: 'Hero App',
@@ -92,6 +156,19 @@ export const PROJECTS: Project[] = [
     featured: true,
     role: 'Designed and built the product end to end: multilingual recipe library, guided cooking, community contributions, and publishing tools.',
     result: '38 family recipes published · French and English',
+    statement: 'Family recipes, preserved for the next generation.',
+    longDescription: [
+      'A bilingual family archive that turns handwritten recipes and shared memories into a calm, practical cooking product.',
+      'I designed and built the complete system: guided cooking, community contributions, multilingual publishing, and the tools that keep the collection growing.',
+    ],
+    media: [
+      {
+        src: '/les-bonnes-recettes-de-maman.jpg',
+        alt: 'Family recipe library with food photography and recipe cards',
+        width: 1728,
+        height: 907,
+      },
+    ],
   },
   {
     name: 'Dunk Hunt',
@@ -127,6 +204,19 @@ export const PROJECTS: Project[] = [
     featured: true,
     role: 'Rebuilding the front end off legacy Bootstrap onto a modern stack, in a team of four on a Rails backend.',
     result: 'Shipping September 2026',
+    statement: 'Modernising a live learning platform without standing still.',
+    longDescription: [
+      'Cercle des Langues pairs learners with live classes and a growing set of digital learning tools.',
+      'Working in a four-person team, I am rebuilding the front end away from legacy Bootstrap while the Rails product continues serving its customers.',
+    ],
+    media: [
+      {
+        src: '/cercle-des-langues.png',
+        alt: 'Cercle des Langues learning platform interface',
+        width: 1150,
+        height: 1150,
+      },
+    ],
   },
   {
     name: 'Volvamed',
@@ -142,6 +232,19 @@ export const PROJECTS: Project[] = [
     featured: true,
     role: 'Sole developer. Architecture, product, analytics, SEO, and the client relationship.',
     result: 'In production · 10 therapists · 400+ of their clients',
+    statement: 'Care workflows designed around practitioners, not software.',
+    longDescription: [
+      'Volvamed gives medical practitioners a focused place to manage schedules, patient relationships, and the daily work surrounding care.',
+      'As sole developer, I lead architecture, product decisions, implementation, analytics, SEO, and the client relationship.',
+    ],
+    media: [
+      {
+        src: '/volvamed.png',
+        alt: 'Volvamed practitioner scheduling interface',
+        width: 1280,
+        height: 1280,
+      },
+    ],
   },
   {
     name: 'Selegrow',

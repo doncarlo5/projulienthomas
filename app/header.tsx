@@ -1,68 +1,37 @@
-import Image from 'next/image'
 import Link from 'next/link'
+import { EMAIL } from './data'
 
 export function Header() {
   return (
-    <header className="border-border flex items-center justify-between border-b py-5">
-      <Link
-        href="/"
-        className="group flex items-center gap-3"
-        aria-label="Julien Thomas, home"
-      >
-        <Image
-          src="/profile.jpg"
-          alt="Portrait of Julien Thomas"
-          width={36}
-          height={36}
-          sizes="36px"
-          className="h-9 w-9 rounded-lg object-cover"
-        />
-        <span className="leading-tight">
-          <span className="text-foreground block text-sm font-medium">
-            Julien Thomas
-          </span>
-          <span className="text-muted-foreground block text-xs">
-            Full-stack developer
-          </span>
-        </span>
-      </Link>
+    <header className="site-header editorial-grid">
+      <div className="site-identity">
+        <Link href="/" aria-label="Julien Thomas, home">
+          Julien Thomas
+        </Link>
+        <span aria-hidden="true">2018—2026</span>
+      </div>
 
-      <nav aria-label="Primary navigation">
-        <ul className="text-muted-foreground flex items-center gap-4 text-sm sm:gap-6">
-          <li>
-            <Link
-              href="/#work"
-              className="hover:text-foreground transition-colors duration-200"
-            >
-              Work
-            </Link>
-          </li>
-          <li className="hidden sm:block">
-            <Link
-              href="/#notes"
-              className="hover:text-foreground transition-colors duration-200"
-            >
-              Notes
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/jt-company"
-              className="hover:text-foreground transition-colors duration-200"
-            >
-              JT Company
-            </Link>
-          </li>
-          <li className="hidden sm:block">
-            <Link
-              href="/#contact"
-              className="hover:text-foreground transition-colors duration-200"
-            >
-              Contact
-            </Link>
-          </li>
-        </ul>
+      <nav className="site-links" aria-label="Primary navigation">
+        <a href={`mailto:${EMAIL}`}>Email</a>
+        <a
+          href="https://github.com/doncarlo5"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+        <a
+          href="https://www.linkedin.com/in/julienthomaspro"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          LinkedIn
+        </a>
       </nav>
+
+      <Link className="site-work-link" href="/#work">
+        Work
+      </Link>
     </header>
   )
 }

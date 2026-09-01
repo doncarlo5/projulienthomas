@@ -1,5 +1,8 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import {
+  Atkinson_Hyperlegible_Mono,
+  Instrument_Sans,
+} from 'next/font/google'
 import './globals.css'
 import { ThemeProviderWrapper } from './theme-provider'
 import { LayoutShell } from './layout-shell'
@@ -84,14 +87,15 @@ export const metadata: Metadata = {
   },
 }
 
-const geist = Geist({
-  variable: '--font-geist',
+const instrumentSans = Instrument_Sans({
+  variable: '--font-display',
   subsets: ['latin'],
 })
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const atkinsonMono = Atkinson_Hyperlegible_Mono({
+  variable: '--font-mono',
   subsets: ['latin'],
+  adjustFontFallback: false,
 })
 
 export default function RootLayout({
@@ -108,7 +112,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geist.variable} ${geistMono.variable} bg-background text-foreground tracking-tight antialiased`}
+        className={`${instrumentSans.variable} ${atkinsonMono.variable} bg-background text-foreground antialiased`}
       >
         <ThemeProviderWrapper>
           <LayoutShell>{children}</LayoutShell>
