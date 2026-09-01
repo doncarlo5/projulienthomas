@@ -590,6 +590,14 @@ button {
   object-position: right center;
 }
 
+.project-media--crop-top img {
+  object-position: center top;
+}
+
+.project-media--crop-bottom img {
+  object-position: center bottom;
+}
+
 .project-media:hover img {
   transform: scale(1.008);
 }

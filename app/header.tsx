@@ -13,18 +13,16 @@ export function Header() {
 
       <nav className="site-links" aria-label="Primary navigation">
         <a href={`mailto:${EMAIL}`}>Email</a>
-        {SOCIAL_LINKS.filter((social) => social.label !== 'X / Twitter').map(
-          (social) => (
-            <a
-              key={social.label}
-              href={social.link}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {social.label}
-            </a>
-          ),
-        )}
+        {SOCIAL_LINKS.filter((social) => social.showInHeader).map((social) => (
+          <a
+            key={social.label}
+            href={social.link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {social.label}
+          </a>
+        ))}
       </nav>
 
       <Link className="site-work-link" href="/#work">

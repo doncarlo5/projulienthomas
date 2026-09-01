@@ -29,7 +29,7 @@ export type ProjectMedia = {
   width: number
   height: number
   layout?: 'full' | 'half'
-  crop?: 'left' | 'center' | 'right'
+  crop?: 'left' | 'center' | 'right' | 'top' | 'bottom'
 }
 
 type ArchiveProject = ProjectBase & {
@@ -58,6 +58,7 @@ type BlogPost = {
 type SocialLink = {
   label: string
   link: string
+  showInHeader?: boolean
 }
 
 export const PROJECTS: Project[] = [
@@ -239,7 +240,7 @@ export const PROJECTS: Project[] = [
         width: 1150,
         height: 1150,
         layout: 'half',
-        crop: 'left',
+        crop: 'top',
       },
       {
         src: '/cercle-des-langues.png',
@@ -247,7 +248,7 @@ export const PROJECTS: Project[] = [
         width: 1150,
         height: 1150,
         layout: 'half',
-        crop: 'right',
+        crop: 'bottom',
       },
     ],
   },
@@ -283,7 +284,7 @@ export const PROJECTS: Project[] = [
         width: 1280,
         height: 1280,
         layout: 'half',
-        crop: 'left',
+        crop: 'top',
       },
       {
         src: '/volvamed.png',
@@ -291,7 +292,7 @@ export const PROJECTS: Project[] = [
         width: 1280,
         height: 1280,
         layout: 'half',
-        crop: 'right',
+        crop: 'bottom',
       },
     ],
   },
@@ -364,6 +365,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
   {
     label: 'GitHub',
     link: 'https://github.com/doncarlo5',
+    showInHeader: true,
   },
   {
     label: 'X / Twitter',
@@ -372,6 +374,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
   {
     label: 'LinkedIn',
     link: 'https://www.linkedin.com/in/julienthomaspro',
+    showInHeader: true,
   },
 ]
 
