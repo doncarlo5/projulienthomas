@@ -301,7 +301,7 @@ export const PROJECTS: Project[] = [
   {
     name: 'Céhèrem',
     description: 'CRM for business-creation advisors.',
-    link: 'https://ceherem.com/',
+    link: 'https://selego.co',
     image: '/CRM.png',
     imageAlt: 'Céhèrem customer relationship management dashboard',
     id: 'project2',
