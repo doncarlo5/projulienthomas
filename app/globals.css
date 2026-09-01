@@ -149,6 +149,19 @@
     outline: 2px solid var(--ring);
     outline-offset: 4px;
   }
+
+  button,
+  a {
+    color: inherit;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  button {
+    font: inherit;
+  }
 }
 
 :root {
@@ -157,19 +170,6 @@
   --mono: var(--font-mono), ui-monospace, monospace;
   --font-geist: var(--font-display);
   --font-geist-mono: var(--font-mono);
-}
-
-button,
-a {
-  color: inherit;
-}
-
-a {
-  text-decoration: none;
-}
-
-button {
-  font: inherit;
 }
 
 .editorial-grid {
