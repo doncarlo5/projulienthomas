@@ -145,11 +145,7 @@ export function WorkShowcase() {
                 {project.media.map((media, mediaIndex) => (
                   <figure
                     key={`${media.src}-${mediaIndex}`}
-                    className={`project-media project-media--${media.layout ?? 'full'} ${
-                      media.crop
-                        ? `project-media--crop project-media--crop-${media.crop}`
-                        : ''
-                    }`}
+                    className={`project-media project-media--${media.layout ?? 'full'}`}
                   >
                     <Image
                       src={media.src}
