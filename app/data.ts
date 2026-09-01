@@ -274,8 +274,8 @@ export const PROJECTS: Project[] = [
         height: 1280,
       },
       {
-        src: '/portfolio/volvamed-search.png',
-        alt: 'Volvamed practitioner search results and appointment availability',
+        src: '/portfolio/volvamed-home.png',
+        alt: 'Volvamed homepage guiding visitors toward the right wellbeing practitioner',
         width: 1440,
         height: 900,
         layout: 'half',
