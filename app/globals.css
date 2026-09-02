@@ -320,6 +320,10 @@
   text-wrap: pretty;
 }
 
+.intro-summary-mobile {
+  display: none;
+}
+
 .profile-index {
   align-items: start;
   padding: 0 var(--page-pad) clamp(110px, 14vh, 170px);
@@ -822,6 +826,16 @@
   .intro-summary,
   .profile-index {
     display: none;
+  }
+
+  .intro-summary-mobile {
+    display: block;
+    max-width: 25rem;
+    margin: 24px 0 0;
+    color: var(--muted-foreground);
+    font-size: 16px;
+    line-height: 1.45;
+    letter-spacing: -0.01em;
   }
 
   .work-nav {

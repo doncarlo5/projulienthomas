@@ -34,6 +34,9 @@ export default function Personal() {
           engineering and sales background keeps the work technical, useful,
           and grounded in the people it serves.
         </p>
+        <p className="intro-summary-mobile">
+          I build digital products from first decision to production.
+        </p>
       </section>
 
       <section className="profile-index editorial-grid" aria-label="Profile">
