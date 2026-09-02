@@ -276,22 +276,49 @@
   padding: clamp(38px, 5vh, 66px) var(--page-pad) clamp(72px, 10vh, 120px);
 }
 
-.intro h1,
-.intro p {
-  margin: 0;
-  font-size: clamp(28px, 2.23vw, 36px);
-  font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  text-wrap: pretty;
+.intro-identity {
+  grid-column: 1 / 6;
+  display: grid;
+  grid-template-columns: clamp(88px, 7vw, 124px) minmax(0, 1fr);
+  gap: clamp(18px, 2vw, 32px);
+  align-items: end;
+}
+
+.intro-portrait {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 38%;
+  filter: grayscale(1);
 }
 
 .intro h1 {
-  grid-column: 1 / 6;
+  margin: 0;
+  font-size: clamp(44px, 4.1vw, 66px);
+  font-weight: 400;
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
 }
 
-.intro > p {
+.intro-location {
+  margin: 20px 0 1px;
+  color: var(--muted-foreground);
+  font: 500 11px/1.25 var(--mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.intro-summary {
   grid-column: 7 / 12;
+  max-width: 42rem;
+  margin: 0;
+  font-size: clamp(24px, 1.9vw, 31px);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  text-wrap: pretty;
 }
 
 .profile-index {
@@ -777,12 +804,23 @@
     padding-bottom: 42px;
   }
 
-  .intro h1 {
-    font-size: 30px;
-    line-height: 1.2;
+  .intro-identity {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 16px;
   }
 
-  .intro > p,
+  .intro h1 {
+    font-size: 30px;
+    line-height: 1;
+  }
+
+  .intro-location {
+    margin-top: 12px;
+    font-size: 9px;
+  }
+
+  .intro-summary,
   .profile-index {
     display: none;
   }

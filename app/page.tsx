@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import {
   ARCHIVE_PROJECTS,
@@ -13,13 +14,24 @@ export default function Personal() {
   return (
     <main className="portfolio-home">
       <section className="intro editorial-grid" aria-labelledby="intro-title">
-        <h1 id="intro-title">
-          I am a Barcelona-based full-stack developer building digital products
-          from first decision to production.
-        </h1>
-        <p>
-          I work across architecture, product, and the client conversation. My
-          background in engineering and sales keeps the work technical, useful,
+        <div className="intro-identity">
+          <Image
+            className="intro-portrait"
+            src="/profile.jpg"
+            alt="Julien Thomas"
+            width={881}
+            height={827}
+            priority
+          />
+          <div>
+            <h1 id="intro-title">Full-stack developer</h1>
+            <p className="intro-location">Based in Barcelona</p>
+          </div>
+        </div>
+        <p className="intro-summary">
+          I build digital products from first decision to production, working
+          across architecture, product, and the client conversation. My
+          engineering and sales background keeps the work technical, useful,
           and grounded in the people it serves.
         </p>
       </section>
