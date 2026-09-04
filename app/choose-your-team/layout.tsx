@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { SITE_NAME } from '@/lib/constants'
 
-const title = 'Choose Your Team — Random Team Picker'
+const title = 'Choose Your Team — Créez vos équipes au hasard'
 const description =
-  'Create fair random teams in seconds. Free on iPhone and Android, with no ads, no signup, and full offline support.'
+  'Formez des équipes équitables en quelques secondes. Gratuit sur iPhone et Android, sans publicité, sans inscription et disponible hors ligne.'
 const path = '/choose-your-team'
 const imagePath = '/choose-your-team/opengraph-image'
 
@@ -17,19 +17,19 @@ export const metadata: Metadata = {
   applicationName: 'Choose Your Team',
   category: 'games',
   keywords: [
-    'random team generator',
-    'team picker',
-    'group generator',
-    'iPhone app',
-    'Android app',
+    "générateur d'équipes aléatoires",
+    "créateur d'équipes",
+    'répartir des joueurs',
+    'application iPhone',
+    'application Android',
   ],
   alternates: { canonical: path },
   openGraph: {
     type: 'website',
     url: path,
     siteName: 'Choose Your Team',
-    locale: 'en_US',
-    alternateLocale: ['fr_FR'],
+    locale: 'fr_FR',
+    alternateLocale: ['en_US'],
     title,
     description,
     images: [
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         type: 'image/png',
-        alt: 'Choose Your Team — fair random teams in seconds, free on iPhone and Android',
+        alt: 'Choose Your Team — des équipes équitables en quelques secondes, gratuitement sur iPhone et Android',
       },
     ],
   },

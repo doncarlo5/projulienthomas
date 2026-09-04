@@ -1,15 +1,22 @@
+import { readFile } from 'node:fs/promises'
+import path from 'node:path'
 import { ImageResponse } from 'next/og'
 import { WEBSITE_URL } from '@/lib/constants'
 
 export const alt =
-  'Choose Your Team — fair random teams in seconds, free on iPhone and Android'
+  'Choose Your Team — des équipes équitables en quelques secondes, gratuitement sur iPhone et Android'
 export const size = {
   width: 1200,
   height: 630,
 }
 export const contentType = 'image/png'
 
-export default function OpenGraphImage() {
+export default async function OpenGraphImage() {
+  const icon = await readFile(
+    path.join(process.cwd(), 'app', 'choose-your-team', 'icon.png'),
+  )
+  const iconSource = `data:image/png;base64,${icon.toString('base64')}`
+
   return new ImageResponse(
     <div
       style={{
@@ -59,23 +66,13 @@ export default function OpenGraphImage() {
         }}
       >
         <div style={{ alignItems: 'center', display: 'flex' }}>
-          <div
-            style={{
-              alignItems: 'center',
-              background:
-                'linear-gradient(145deg, #ffc449 0%, #95c993 52%, #37d5cd 100%)',
-              border: '5px solid #171714',
-              borderRadius: 36,
-              display: 'flex',
-              fontSize: 38,
-              fontWeight: 700,
-              height: 72,
-              justifyContent: 'center',
-              width: 72,
-            }}
-          >
-            1
-          </div>
+          <img
+            alt=""
+            height={72}
+            src={iconSource}
+            style={{ borderRadius: 18 }}
+            width={72}
+          />
           <span style={{ fontSize: 25, fontWeight: 700, marginLeft: 20 }}>
             Choose Your Team
           </span>
@@ -92,8 +89,8 @@ export default function OpenGraphImage() {
               lineHeight: 0.98,
             }}
           >
-            <span>Fair teams.</span>
-            <span>Zero debate.</span>
+            <span>Des équipes équitables.</span>
+            <span>Zéro débat.</span>
           </div>
           <span
             style={{
@@ -103,7 +100,7 @@ export default function OpenGraphImage() {
               marginTop: 28,
             }}
           >
-            Put your fingers down and let chance decide.
+            Posez vos doigts et laissez le hasard décider.
           </span>
         </div>
 
@@ -118,10 +115,10 @@ export default function OpenGraphImage() {
               padding: '13px 22px',
             }}
           >
-            Free on iOS &amp; Android
+            Gratuit sur iOS et Android
           </span>
           <span style={{ color: '#6f6c65', fontSize: 19, marginLeft: 20 }}>
-            No ads · Works offline
+            Sans pub · Hors ligne
           </span>
         </div>
       </div>
