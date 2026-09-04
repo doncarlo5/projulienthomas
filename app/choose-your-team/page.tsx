@@ -1,11 +1,32 @@
+import { headers } from 'next/headers'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import type { SimpleIcon } from 'simple-icons'
 import { siApple, siGoogleplay } from 'simple-icons'
 
-const APP_STORE_LINK =
-  'https://apps.apple.com/fr/app/choose-your-team/id6756816697?l=en-GB'
+const APP_STORE_LINK = 'https://apps.apple.com/app/id6756816697'
 const PLAY_STORE_LINK =
-  'https://play.google.com/apps/testing/com.doncarlos.chooseyourteam'
+  'https://play.google.com/store/apps/details?id=com.doncarlos.chooseyourteam'
+
+function getStoreLink(userAgent: string | null) {
+  if (!userAgent) {
+    return null
+  }
+
+  if (/android/i.test(userAgent)) {
+    return PLAY_STORE_LINK
+  }
+
+  if (/(iphone|ipad|ipod)/i.test(userAgent)) {
+    return APP_STORE_LINK
+  }
+
+  if (/macintosh.*mobile/i.test(userAgent)) {
+    return APP_STORE_LINK
+  }
+
+  return null
+}
 
 function StoreIcon({ icon }: { icon: SimpleIcon }) {
   return (
@@ -23,7 +44,14 @@ function StoreIcon({ icon }: { icon: SimpleIcon }) {
 const storeLinkClassName =
   'inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring sm:w-auto'
 
-export default function ChooseYourTeamLanding() {
+export default async function ChooseYourTeamLanding() {
+  const requestHeaders = await headers()
+  const storeLink = getStoreLink(requestHeaders.get('user-agent'))
+
+  if (storeLink) {
+    redirect(storeLink)
+  }
+
   return (
     <main className="pb-16 sm:pb-24">
       <header className="border-border border-b pt-20 pb-12 sm:pt-28 sm:pb-16">
