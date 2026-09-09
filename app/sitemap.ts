@@ -23,7 +23,7 @@ const routes = [
     changeFrequency: 'yearly',
     priority: 0.6,
   },
-  { path: '/choose-your-team', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/choose-your-team', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/jt-company', changeFrequency: 'monthly', priority: 0.9 },
   {
     path: '/choose-your-team/privacy-policy',
