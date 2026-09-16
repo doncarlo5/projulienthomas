@@ -282,7 +282,7 @@ export const PROJECTS: Project[] = [
     name: 'Volvamed',
     description: 'Scheduling and care workflows for medical practitioners.',
     link: 'https://volvamed.fr/',
-    image: '/volvamed.png',
+    image: '/portfolio/volvamed-agenda.png',
     imageAlt:
       'Screenshot of the Volvamed therapist agenda with scheduled appointments',
     id: 'project7',
@@ -299,10 +299,10 @@ export const PROJECTS: Project[] = [
     ],
     media: [
       {
-        src: '/volvamed.png',
-        alt: 'Volvamed practitioner scheduling interface',
-        width: 1280,
-        height: 1280,
+        src: '/portfolio/volvamed-agenda.png',
+        alt: 'Volvamed weekly agenda with practitioner appointments in September 2026',
+        width: 1882,
+        height: 1868,
       },
       {
         src: '/portfolio/volvamed-home.png',
