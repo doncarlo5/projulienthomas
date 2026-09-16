@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Node.js 20.x or later
+- Node.js 24 (use `nvm use` to select the version in `.nvmrc`)
 - Git
 
 ## Installation Steps
@@ -10,14 +10,15 @@
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/ibelick/nim.git
-   cd nim
+   git clone https://github.com/doncarlo5/projulienthomas.git
+   cd projulienthomas
    ```
 
 2. **Install dependencies**
 
    ```bash
-   npm install
+   nvm use
+   npm ci
    ```
 
 3. **Run the development server**
@@ -25,6 +26,8 @@
    ```bash
    npm run dev
    ```
+
+   Open [http://localhost:3001](http://localhost:3001).
 
 4. **Update the template data**
 

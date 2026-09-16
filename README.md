@@ -1,6 +1,6 @@
 <img src="/public/cover.jpg" alt="Cover image representing Nim, a personal website template" width="100%" />
 
-Nim is a free and open-source personal website template built with Next.js 15, React 19, Tailwind CSS v4, and Motion. Designed for developers, designers, and founders, it combines minimalism with delightful animated components powered by [Motion-Primitives](https://motion-primitives.com).
+This portfolio is based on the Nim template and uses Next.js 16.3, React 19.3, Tailwind CSS 4.3, and MDX. Development and production builds use Turbopack.
 
 Live demo: [https://nim-fawn.vercel.app](https://nim-fawn.vercel.app)
 
@@ -10,20 +10,38 @@ Live demo: [https://nim-fawn.vercel.app](https://nim-fawn.vercel.app)
 - Blog support with MDX.
 - Responsive and accessible design.
 - Easy to use
-- [Motion-Primitives](https://motion-primitives.com) for animated components.
+- Project galleries with list and grid views.
+
+## Local toolchain
+
+Use Node.js 24 (`nvm use` reads `.nvmrc`), then `npm ci`.
+
+- `npm run dev`: development server at http://localhost:3001.
+- `npm run lint`: ESLint checks.
+- `npm run typecheck`: TypeScript checks.
+- `npm run build`: production build.
+- `npm start`: serve the production build.
+
+Dependency update notes (September 2026):
+
+- TypeScript stays on 6.0.x because the Next.js ESLint toolchain does not support TypeScript 7 yet.
+- ESLint stays on 9.39.5 because Next.js's React, import, and accessibility plugins do not declare support for ESLint 10. ESLint 9 is deprecated upstream; revisit this when those plugins support version 10.
+- The lodash-es override pins 4.18.1 to replace vulnerable versions pinned by Mermaid's indirect dependencies.
+- The existing PostCSS override tracks the direct dependency; Sharp is pinned to 0.35.4.
 
 ## Getting Started
 
 For detailed setup instructions, refer to the [Installation Guide](./INSTALLATION.md).
 
 ```bash
-git clone https://github.com/ibelick/nim.git
-cd nim
-npm install
+git clone https://github.com/doncarlo5/projulienthomas.git
+cd projulienthomas
+nvm use
+npm ci
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
 
 ## Contributing
 

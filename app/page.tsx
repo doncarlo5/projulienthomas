@@ -1,10 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import {
-  ARCHIVE_PROJECTS,
   BLOG_POSTS,
   EMAIL,
-  FEATURED_PROJECTS,
+  PROJECT_GROUPS,
   SOCIAL_LINKS,
   WORK_EXPERIENCE,
 } from './data'
@@ -31,8 +30,8 @@ export default function Personal() {
         <p className="intro-summary">
           I build digital products from first decision to production, working
           across architecture, product, and the client conversation. My
-          engineering and sales background keeps the work technical, useful,
-          and grounded in the people it serves.
+          engineering and sales background keeps the work technical, useful, and
+          grounded in the people it serves.
         </p>
         <p className="intro-summary-mobile">
           I build digital products from first decision to production.
@@ -65,12 +64,18 @@ export default function Personal() {
         </div>
 
         <div>
-          <h2>Selected products</h2>
-          <ul>
-            {FEATURED_PROJECTS.map((project) => (
-              <li key={project.id}>{project.name}</li>
-            ))}
-          </ul>
+          {PROJECT_GROUPS.map((group) => (
+            <div className="profile-project-group" key={group.id}>
+              <h2>
+                <a href={`#${group.id}-projects`}>{group.title}</a>
+              </h2>
+              <ul>
+                {group.featured.map((project) => (
+                  <li key={project.id}>{project.name}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         <div>
@@ -107,32 +112,6 @@ export default function Personal() {
         className="after-work editorial-grid"
         aria-label="More information"
       >
-        <div className="archive-block">
-          <h2>Archive</h2>
-          <ul>
-            {ARCHIVE_PROJECTS.map((project) => (
-              <li key={project.id}>
-                {project.link ? (
-                  project.link.startsWith('/') ? (
-                    <Link href={project.link}>{project.name}</Link>
-                  ) : (
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {project.name}
-                    </a>
-                  )
-                ) : (
-                  <span>{project.name}</span>
-                )}
-                <span>{project.description}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
         <div className="notes-block" id="notes">
           <h2>Notes</h2>
           <ul>

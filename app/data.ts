@@ -21,6 +21,7 @@ export type FeaturedProject = ProjectBase & {
   statement: string
   longDescription: string[]
   media: ProjectMedia[]
+  mediaLayout?: 'mobile'
 }
 
 export type ProjectMedia = {
@@ -204,6 +205,36 @@ export const PROJECTS: Project[] = [
     id: 'project5',
     category: 'personal',
     platform: ['iOS', 'Android'],
+    featured: true,
+    year: '2025–2026',
+    role: 'Independent app development and publishing on iOS and Android.',
+    result: 'Up to 10 players · Works offline · No ads',
+    statement: 'The game starts with a simple touch.',
+    longDescription: [
+      'Choose Your Team turns the moment before a game into a shared interaction. Pick the number of teams, place your fingers on the screen, and let the app split the group at random.',
+      'Built for board games, casual sports, and evenings with friends, the app supports up to ten players. Colors, numbers, and shapes make teams easy to recognise, with no names to enter or account to create.',
+    ],
+    mediaLayout: 'mobile',
+    media: [
+      {
+        src: '/choose-your-team/setup.png',
+        alt: 'Choose Your Team setup screen with team count and support for up to ten players',
+        width: 1242,
+        height: 2688,
+      },
+      {
+        src: '/choose-your-team/touch.png',
+        alt: 'Players placing their fingers on the screen before teams are assigned',
+        width: 1242,
+        height: 2688,
+      },
+      {
+        src: '/choose-your-team/teams.png',
+        alt: 'Teams identified by colorful numbered shapes in Choose Your Team',
+        width: 1242,
+        height: 2688,
+      },
+    ],
   },
   {
     name: 'Cercle des Langues',
@@ -380,3 +411,22 @@ export const FEATURED_PROJECTS = PROJECTS.filter(
 export const ARCHIVE_PROJECTS = PROJECTS.filter(
   (project) => project.featured !== true,
 )
+
+export const PROJECT_GROUPS = [
+  {
+    id: 'professional',
+    title: 'Professional projects',
+    description: 'Client work and products built with professional teams.',
+  },
+  {
+    id: 'personal',
+    title: 'Personal projects',
+    description: 'Independent products, side projects, and experiments.',
+  },
+].map((group) => ({
+  ...group,
+  featured: FEATURED_PROJECTS.filter(
+    (project) => project.category === group.id,
+  ),
+  archive: ARCHIVE_PROJECTS.filter((project) => project.category === group.id),
+}))
