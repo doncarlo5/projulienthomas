@@ -24,7 +24,13 @@ export default function Personal() {
           />
           <div>
             <h1 id="intro-title">Full-stack developer</h1>
-            <p className="intro-location">Based in Barcelona</p>
+            <div className="intro-details">
+              <p className="intro-location">Based in Barcelona</p>
+              <p className="intro-availability">
+                <span aria-hidden="true" />
+                Available
+              </p>
+            </div>
           </div>
         </div>
         <p className="intro-summary">
